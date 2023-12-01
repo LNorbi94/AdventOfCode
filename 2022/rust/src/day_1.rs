@@ -22,21 +22,18 @@ fn get_first_nth_calories_sum(calorie_counts : &Vec<i32>, n : usize) {
     println!("First {n} calorie count summed was: {highest_calorie_count}");
 }
 
-pub fn day_1(task : i32, input_file : i32) {
-    let file_path : &Path;
-    if input_file == 1 {
-        file_path = Path::new(r"..\input_files\day_1_a.txt")
-    } else if input_file == 2 {
-        file_path = Path::new(r"..\input_files\day_1_b.txt")
-    } else {
-        panic!("Invalid input file was given.")
-    }
-
+fn solve(file_path : &Path) {
+    println!("Solving day 1 with the following input file: {}.", file_path.display());
     let mut calorie_counts = parse_input(file_path);
     calorie_counts.sort();
-    if task == 1 {
-        get_first_nth_calories_sum(&calorie_counts, 1);
-    } else if task == 2 {
-        get_first_nth_calories_sum(&calorie_counts, 3);
-    }
+    get_first_nth_calories_sum(&calorie_counts, 1);
+    get_first_nth_calories_sum(&calorie_counts, 3);
+}
+
+pub fn day_1() {
+    let mut file_path : &Path = Path::new(r"..\input_files\day_1_a.txt");
+    solve(file_path);
+    file_path = Path::new(r"..\input_files\day_1_b.txt");
+    solve(file_path);
+
 }
