@@ -8,9 +8,11 @@ project(
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# add_library(MyLibExample simple_lib.cpp simple_lib.hpp)
+add_library(Common "common/TaskSolver.h" "common/TaskSolver.cpp")
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/02/input.txt
+include_directories(common)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/01/input.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/01/sample_input.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
@@ -19,7 +21,8 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/01/sample_input2.txt
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/02/sample_input.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-add_executable(01 01/main.cpp)
+add_executable(01 01/main.cpp "01/FirstTask.h" "01/FirstTask.cpp" "01/SecondTask.h" "01/SecondTask.cpp")
 add_executable(02 02/main.cpp)
 
-# target_link_libraries(01 PRIVATE MyLibExample)
+target_link_libraries(01 PRIVATE Common)
+target_link_libraries(02 PRIVATE Common)
