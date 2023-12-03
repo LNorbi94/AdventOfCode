@@ -70,6 +70,24 @@ void solveFirstTask( const std::string_view fileName)
     std::cout << solution << "\n";
 }
 
+std::vector< int > extractAdjacentNumbers( const std::string line, const int position )
+{
+    std::vector< int > numbers;
+    std::regex r{ "\\d+" };
+    auto begin = std::sregex_iterator( line.cbegin(), line.cend(), r );
+    auto end = std::sregex_iterator();
+    for (auto& number = begin; begin != end; ++number) {
+        auto checkFrom = number->position( 0 ) - 1;
+        auto checkUntil = checkFrom + number->length() + 1;
+
+        if ( position >= checkFrom && position <= checkUntil ) {
+            numbers.emplace_back( std::stoi( number->str() ) );
+        }
+    }
+
+    return numbers;
+}
+
 void solveSecondTask( const std::string_view fileName )
 {
     std::ifstream stream{ fileName.data() };
@@ -88,42 +106,13 @@ void solveSecondTask( const std::string_view fileName )
             }
 
             std::vector< int > gears;
-
-            std::regex r{ "\\d+" };
             if ( i - 1 >= 0 ) {
-                auto begin = std::sregex_iterator( lines[i - 1].begin(), lines[i - 1].end(), r );
-                auto end = std::sregex_iterator();
-                for (auto& number = begin; begin != end; ++number) {
-                    auto checkFrom = number->position( 0 ) - 1;
-                    auto checkUntil = checkFrom + number->length() + 1;
-
-                    if ( j >= checkFrom && j <= checkUntil ) {
-                        gears.emplace_back( std::stoi( number->str() ) );
-                    }
-                }
+                gears.append_range( extractAdjacentNumbers( lines[ i - 1 ], j ) );
             }
             if ( i + 1 < lines.size() ) {
-                auto begin = std::sregex_iterator( lines[i + 1].begin(), lines[i + 1].end(), r );
-                auto end = std::sregex_iterator();
-                for (auto& number = begin; begin != end; ++number) {
-                    auto checkFrom = number->position( 0 ) - 1;
-                    auto checkUntil = checkFrom + number->length() + 1;
-
-                    if ( j >= checkFrom && j <= checkUntil ) {
-                        gears.emplace_back( std::stoi( number->str() ) );
-                    }
-                }
+                gears.append_range( extractAdjacentNumbers( lines[ i + 1 ], j ) );
             }
-            auto begin = std::sregex_iterator( lines[i].begin(), lines[i].end(), r );
-            auto end = std::sregex_iterator();
-            for (auto& number = begin; begin != end; ++number) {
-                auto checkFrom = number->position( 0 ) - 1;
-                auto checkUntil = checkFrom + number->length() + 1;
-
-                if ( j >= checkFrom && j <= checkUntil ) {
-                    gears.emplace_back( std::stoi( number->str() ) );
-                }
-            }
+            gears.append_range( extractAdjacentNumbers( lines[ i ], j ) );
 
             if (gears.size() == 2) {
                 solution += (gears[0] * gears[1]);
