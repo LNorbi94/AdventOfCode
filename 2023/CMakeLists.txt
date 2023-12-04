@@ -8,7 +8,7 @@ project(
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_library(Common "common/TaskSolver.h" "common/TaskSolver.cpp")
+add_library(Common "common/TaskSolver.h" "common/TaskSolver.cpp" "common/StringManipulation.h" "common/StringManipulation.cpp")
 
 include_directories(common)
 
@@ -27,3 +27,5 @@ add_executable(03 03/main.cpp)
 
 target_link_libraries(01 PRIVATE Common)
 target_link_libraries(02 PRIVATE Common)
+
+add_subdirectory(04)
