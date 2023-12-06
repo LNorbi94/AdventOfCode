@@ -125,9 +125,9 @@ void solveSecondTask( const std::string_view fileName )
 
 int main()
 {
-    solveFirstTask( "sample_input.txt" );
-    solveFirstTask( "input.txt" );
-    solveSecondTask( "sample_input.txt" );
-    solveSecondTask( "input.txt" );
+    solveFirstTask( "sample.txt" );
+    solveFirstTask( "complete.txt" );
+    solveSecondTask( "sample.txt" );
+    solveSecondTask( "complete.txt" );
     return 0;
 }
