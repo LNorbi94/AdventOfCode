@@ -8,8 +8,6 @@
 #include <map>
 #include <iostream>
 
-#include "BigInt.hpp"
-
 struct MapEntry
 {
     int64_t mapping = 0;
@@ -19,7 +17,7 @@ struct MapEntry
 class Range
 {
 public:
-    Range(const BigInt start, const BigInt end)
+    Range(const int64_t start, const int64_t end)
         : m_start{ start }
         , m_end{ end }
     {}
@@ -57,12 +55,12 @@ public:
         return ranges;
     }
 
-    BigInt getStart() const
+    int64_t getStart() const
     {
         return m_start;
     }
 
-    BigInt getEnd() const
+    int64_t getEnd() const
     {
         return m_end;
     }
@@ -73,8 +71,8 @@ public:
     }
 
 private:
-    BigInt m_start = 0;
-    BigInt m_end = 0;
+    int64_t m_start = 0;
+    int64_t m_end = 0;
 };
 
 class Map
@@ -113,14 +111,14 @@ private:
 
 struct Seed
 {
-    BigInt start = 0;
-    BigInt length = 0;
+    int64_t start = 0;
+    int64_t length = 0;
 };
 
 class Seeds
 {
 public:
-    void addSeed( const BigInt start, const BigInt length )
+    void addSeed( const int64_t start, const int64_t length )
     {
         m_seeds.emplace_back( start, length );
     }
@@ -186,7 +184,7 @@ public:
         extractMap( stream, m_temperatureToHumidity );
         extractMap( stream, m_humidityToLocation );
 
-        BigInt closestLocation = std::numeric_limits< int64_t >::max();
+        int64_t closestLocation = std::numeric_limits< int64_t >::max();
         for ( const auto& seed : seeds ) {
             const auto soil = m_seedToSoil.mapItem( seed );
             const auto fertilizer = m_soilToFertilizer.mapItem( soil );
@@ -260,7 +258,7 @@ public:
         rangeOfSeeds.applyMapping( m_temperatureToHumidity );
         rangeOfSeeds.applyMapping( m_humidityToLocation );
 
-        BigInt closestLocation = std::numeric_limits< int64_t >::max();
+        int64_t closestLocation = std::numeric_limits< int64_t >::max();
         for ( const auto& seed : rangeOfSeeds.getSeeds() ) {
             if (seed.start < closestLocation) {
                 closestLocation = seed.start;

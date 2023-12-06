@@ -163,9 +163,9 @@ void solveSecondTask( const std::string_view input )
 
 int main( int argc, char** argv )
 {
-    solveFirstTask( "sample_input.txt" );
-    solveFirstTask( "input.txt" );
-    solveSecondTask( "sample_input2.txt" );
-    solveSecondTask( "input.txt" );
+    solveFirstTask( "sample.txt" );
+    solveFirstTask( "complete.txt" );
+    solveSecondTask( "sample2.txt" );
+    solveSecondTask( "complete.txt" );
     return 0;
 }
