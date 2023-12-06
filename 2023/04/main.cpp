@@ -64,7 +64,7 @@ public:
     {
         const auto lines = common::splitString( line, '|' );
 
-        const auto winningNumbers = extractNumbers( lines[ 0 ] );
+        const auto winningNumbers = common::extractNumbers< int >( lines[ 0 ] );
         if ( winningNumbers.empty() ) {
             return;
         }
@@ -73,26 +73,12 @@ public:
             card.addWinningNumber( winningNumbers[ i ] );
         }
 
-        const auto cardNumbers = extractNumbers( lines[ 1 ] );
+        const auto cardNumbers = common::extractNumbers< int >( lines[ 1 ] );
         for ( const auto& number : cardNumbers ) {
             card.addCardNumber( number );
         }
 
         m_solution += card.cardScore();
-    }
-
-private:
-
-    std::vector< int > extractNumbers( const std::string& text ) const
-    {
-        std::vector< int > numbers;
-        std::regex r{ "\\d+" };
-        auto begin = std::sregex_iterator( text.cbegin(), text.cend(), r );
-        auto end = std::sregex_iterator();
-        for (auto& number = begin; begin != end; ++number) {
-            numbers.emplace_back( std::stoi( number->str() ) );
-        }
-        return numbers;
     }
 };
 
@@ -107,7 +93,7 @@ public:
     {
         const auto lines = common::splitString( line, '|' );
 
-        const auto winningNumbers = extractNumbers( lines[ 0 ] );
+        const auto winningNumbers = common::extractNumbers< int >( lines[ 0 ] );
         if ( winningNumbers.empty() ) {
             return;
         }
@@ -119,7 +105,7 @@ public:
             card.addWinningNumber( winningNumbers[ i ] );
         }
 
-        const auto cardNumbers = extractNumbers( lines[ 1 ] );
+        const auto cardNumbers = common::extractNumbers< int >( lines[ 1 ] );
         for ( const auto& number : cardNumbers ) {
             card.addCardNumber( number );
         }
@@ -133,19 +119,6 @@ public:
     }
 
 private:
-
-    std::vector< int > extractNumbers( const std::string& text ) const
-    {
-        std::vector< int > numbers;
-        std::regex r{ "\\d+" };
-        auto begin = std::sregex_iterator( text.cbegin(), text.cend(), r );
-        auto end = std::sregex_iterator();
-        for (auto& number = begin; begin != end; ++number) {
-            numbers.emplace_back( std::stoi( number->str() ) );
-        }
-        return numbers;
-    }
-
     std::map< int, int > m_extraCopies;
 };
 
