@@ -30,3 +30,4 @@ target_link_libraries(02 PRIVATE Common)
 
 add_subdirectory(04)
 add_subdirectory(05)
+add_subdirectory(06)

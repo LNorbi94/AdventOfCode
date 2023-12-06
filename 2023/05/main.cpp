@@ -231,7 +231,6 @@ class SecondTaskSolver
 public:
     SecondTaskSolver( const std::string_view fileName )
     {
-        
         std::ifstream stream{ fileName.data() };
 
         std::string line;
