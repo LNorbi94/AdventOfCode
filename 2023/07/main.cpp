@@ -9,100 +9,89 @@
 #include <iostream>
 #include <sstream>
 
-class Race
-{
-public:
-    Race( const int64_t time, const int64_t recordDistance )
-        : m_time{ time }
-        , m_recordDistance{ recordDistance }
-    {}
+#include "source/Card.h"
+#include "source/Card2.h"
 
-    int64_t numberOfWaysToWin() const
-    {
-        int64_t wins = 0;
-        for (int64_t i = 1; i < m_time; ++i)
-        {
-            auto speed = i;
-            auto distanceTravelled = (m_time - i) * speed;
-            if (distanceTravelled > m_recordDistance) {
-                ++wins;
-            }
-        }
-        return wins;
-    }
-
-private:
-    int64_t m_time = 0;
-    int64_t m_recordDistance = 0;
-};
-
-class FirstTaskSolver
+class FirstTaskSolver : public TaskSolver
 {
 public:
     FirstTaskSolver( const std::string_view fileName )
+        : TaskSolver{ fileName }
     {
-        std::ifstream stream{ fileName.data() };
+    }
 
-        std::string line;
-        std::getline(stream, line);
-        const auto times = common::extractNumbers< int >(line);
-        std::getline(stream, line);
-        const auto distances = common::extractNumbers< int >(line);
+    void parseLine(std::string_view line) override
+    {
+        std::stringstream ss{ line.data() };
+        std::string cardNumber;
+        ss >> cardNumber;
+        int bid;
+        ss >> bid;
 
-        std::vector< Race > races;
-        for (auto i = 0; i < times.size(); ++i) {
-            races.emplace_back(times[i], distances[i]);
+        m_cards.insert(Card{ cardNumber, bid });
+    }
+
+    void getSolution() const
+    {
+        int rank = 1;
+        int64_t solution = 0;
+        for (const auto& card : m_cards) {
+            solution += (card.getBid() * rank);
+            ++rank;
         }
-
-        auto solution = 1;
-        for (const auto& race : races) {
-            solution *= race.numberOfWaysToWin();
-        }
-
         std::cout << solution << "\n";
     }
+
+private:
+    std::set< Card > m_cards;
 };
 
-class SecondTaskSolver
+class SecondTaskSolver : public TaskSolver
 {
 public:
-    SecondTaskSolver( const std::string_view fileName )
+    SecondTaskSolver(const std::string_view fileName)
+        : TaskSolver{ fileName }
     {
-        std::ifstream stream{ fileName.data() };
+    }
 
-        std::string line;
-        std::getline(stream, line);
-        const auto times = common::extractNumbers< int64_t >(line);
-        std::getline(stream, line);
-        const auto distances = common::extractNumbers< int64_t >(line);
+    void parseLine(std::string_view line) override
+    {
+        std::stringstream ss{ line.data() };
+        std::string cardNumber;
+        ss >> cardNumber;
+        int bid;
+        ss >> bid;
 
-        std::vector< Race > races;
-        std::stringstream time;
-        std::stringstream distance;
-        for (auto i = 0; i < times.size(); ++i) {
-            time << times[i];
-            distance << distances[i];
+        m_cards.insert(Card2{ cardNumber, bid });
+    }
+
+    void getSolution() const
+    {
+        int rank = 1;
+        int64_t solution = 0;
+        for (const auto& card : m_cards) {
+            solution += (card.getBid() * rank);
+            ++rank;
         }
-        races.emplace_back(std::stoll(time.str()), std::stoll(distance.str()));
-
-        auto solution = 1;
-        for (const auto& race : races) {
-            solution *= race.numberOfWaysToWin();
-        }
-
         std::cout << solution << "\n";
     }
 
+private:
+    std::set< Card2 > m_cards;
 };
 
 void solveFirstTask( const std::string_view file )
 {
     FirstTaskSolver f{ file };
+    f.solveTask();
+    f.getSolution();
 }
 
 void solveSecondTask( const std::string_view file )
 {
     SecondTaskSolver f{ file };
+    f.solveTask();
+    f.getSolution();
 }
 
 int main()
