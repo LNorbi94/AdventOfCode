@@ -20,4 +20,6 @@ namespace common
         }
         return numbers;
     }
+
+    std::vector< std::string > extractWords(const std::string& text);
 }
