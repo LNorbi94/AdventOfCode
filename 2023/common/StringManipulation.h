@@ -12,7 +12,7 @@ namespace common
     std::vector< T > extractNumbers( const std::string& text )
     {
         std::vector< T > numbers;
-        std::regex r{ "\\d+" };
+        std::regex r{ "-?\\d+" };
         auto begin = std::sregex_iterator( text.cbegin(), text.cend(), r );
         auto end = std::sregex_iterator();
         for (auto& number = begin; begin != end; ++number) {
