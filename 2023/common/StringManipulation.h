@@ -6,7 +6,8 @@
 
 namespace common
 {
-    std::array< std::string, 2 > splitString( std::string_view string, char delimiter );
+    std::array< std::string, 2 > splitString(std::string_view string, char delimiter);
+    std::vector< std::string > splitToMultipleString( std::string_view string, char delimiter );
 
     template< typename T >
     std::vector< T > extractNumbers( const std::string& text )

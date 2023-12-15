@@ -10,11 +10,23 @@ std::array< std::string, 2 > common::splitString( const std::string_view string,
         if ( ch == delimiter ) {
             result[ 0 ] = ss.str();
             ss.str( "" );
+        } else {
+            ss << ch;
         }
-        ss << ch;
     }
     result[ 1 ] = ss.str();
     return result;
+}
+
+std::vector<std::string> common::splitToMultipleString(std::string_view string, char delimiter)
+{
+    std::stringstream ss{ string.data() };
+    std::vector<std::string> words;
+    std::string word;
+    while (std::getline(ss, word, delimiter)) {
+        words.push_back(word);
+    }
+    return words;
 }
 
 std::vector<std::string> common::extractWords(const std::string& text)
