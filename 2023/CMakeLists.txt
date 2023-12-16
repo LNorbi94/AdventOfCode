@@ -13,7 +13,7 @@ add_library(Common
 	"common/TaskSolver.cpp"
 	"common/StringManipulation.h"
 	"common/StringManipulation.cpp"
-)
+ "16/source/Tile.h" "16/source/Direction.h")
 
 include_directories(common)
 
@@ -29,3 +29,4 @@ add_subdirectory(09)
 add_subdirectory(10)
 add_subdirectory(13)
 add_subdirectory(15)
+add_subdirectory(16)

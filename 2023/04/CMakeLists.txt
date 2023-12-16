@@ -5,11 +5,11 @@ project(
   VERSION 23.0
   LANGUAGES CXX)
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/input/04.txt
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/input/complete.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/input/04_sample.txt
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/input/sample.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/input/04_sample_2.txt
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/input/sample2.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(04 main.cpp)
