@@ -20,10 +20,8 @@ public:
     TileType getType() const;
 
     std::vector< Direction > getNextTiles(const Direction direction) const;
-    //bool canMoveToPipe(const Direction direction, const char pipeTwo) const;
 
     Direction getDirectionToTile(const Id& id) const;
-    //Direction getNewDirection(const Direction direction) const;
 
     std::array< const Id, 4 > getNeighbours() const;
     const Id& getNeighbour(Direction direction) const;
