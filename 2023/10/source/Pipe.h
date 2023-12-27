@@ -16,6 +16,7 @@ public:
     Id getId() const;
 
     char getType() const;
+    std::u8string_view prettyType() const;
 
     Id getNextPipe(const Direction direction) const;
     bool canMoveToPipe(const Direction direction, const char pipeTwo) const;
@@ -24,6 +25,7 @@ public:
     Direction getNewDirection(const Direction direction) const;
 
     std::array< const Id, 4 > getNeighbours() const;
+    Id getNeighbour(Direction direction) const;
 
 private:
     Id m_id;

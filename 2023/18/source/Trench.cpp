@@ -144,8 +144,7 @@ int Trench::floodFill(Id id, std::set< Id >& examinedIds)
                 insideTrench.insert(std::make_shared<TrenchNode>(neighbour, ""));
                 q.push(neighbour);
             }
-        }
-        else {
+        } else {
             return -1;
         }
     }

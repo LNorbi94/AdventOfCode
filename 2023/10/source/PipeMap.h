@@ -2,9 +2,11 @@
 
 #include "Pipe.h"
 
-#include <string_view>
 #include <optional>
+#include <set>
+#include <string_view>
 #include <vector>
+#include <variant>
 
 class PipeMap
 {
@@ -13,23 +15,22 @@ public:
 
     void findLoop();
     int getLongestDistance();
-    int getLargestEnclosedArea();
+    int getEnclosedArea();
 
 private:
-    void calculateDistances();
-    int getEnclosedArea(const Pipe& pipe, std::vector<Id>& visitedIdsGlobally);
+    void findEnclosedPipes(const Pipe& pipe);
 
     bool isValidId(const Id& id) const;
     bool isPartOfLoop(const Id& id) const;
     bool isPipeEnclosedInLoop(const Pipe& pipe) const;
-    int getNumberOfEnclosingPipes(const Pipe& pipe) const;
-    Pipe& getPipe(const Id& id);
+    int getNumberOfEnclosingPipes(const Pipe& pipe, const std::vector< Id >& additionalPipes = {}) const;
+    const Pipe& getPipe(const Id& id) const;
     std::optional< Pipe > getNextPipe(const Pipe& pipe, Direction& direction);
-
-    const std::vector< Id >& getLoop() const;
 
     std::vector< std::vector< Pipe > > m_pipes;
     Id m_startPipe = { -1, -1 };
 
-    std::vector< std::vector< Id > > m_loops;
+    std::vector< Id > m_loop;
+    std::vector< Id > m_insideLoop;
+    std::vector< Id > m_visitedIds;
 };

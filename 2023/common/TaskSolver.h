@@ -1,19 +1,16 @@
 #pragma once
 
+#include "FileParser.h"
+
 #include <string>
 
-class TaskSolver
+class TaskSolver : public FileParser
 {
 public:
     TaskSolver( std::string_view inputFile );
 
-    void solveTask();
+    void solveTask() const;
 
 protected:
-    virtual void parseLine( std::string_view line ) = 0;
-
     int m_solution = 0;
-
-private:
-    std::string m_fileName;
 };

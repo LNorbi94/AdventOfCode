@@ -13,10 +13,11 @@ add_library(Common
 	"common/TaskSolver.cpp"
 	"common/StringManipulation.h"
 	"common/StringManipulation.cpp"
-)
+ "common/FileParser.h" "common/FileParser.cpp")
 
 include_directories(common)
 
+# 29 stars at end of December 25th
 add_subdirectory(01)
 add_subdirectory(02)
 add_subdirectory(03)
@@ -35,3 +36,4 @@ add_subdirectory(18)
 add_subdirectory(19)
 add_subdirectory(20)
 add_subdirectory(21)
+add_subdirectory(23)

@@ -1,9 +1,13 @@
 #pragma once
 
-struct Id {
-    int column = 0;
-    int row = 0;
+#include <compare>
+#include <string>
 
-    bool operator!=(const Id& otherId) const;
-    bool operator==(const Id& otherId) const;
+struct Id {
+    int row = 0;
+    int column = 0;
+
+    auto operator<=>(const Id& rhs) const = default;
+
+    operator std::string() const;
 };

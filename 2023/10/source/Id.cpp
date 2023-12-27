@@ -1,11 +1,10 @@
 #include "Id.h"
 
-bool Id::operator!=(const Id& otherId) const
-{
-    return column != otherId.column || row != otherId.row;
-}
+#include <sstream>
 
-bool Id::operator==(const Id& otherId) const
+Id::operator std::string() const
 {
-    return column == otherId.column && row == otherId.row;
+    std::stringstream ss;
+    ss << column << ":" << row;
+    return ss.str();
 }

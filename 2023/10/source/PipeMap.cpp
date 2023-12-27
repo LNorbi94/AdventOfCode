@@ -2,28 +2,45 @@
 
 #include <algorithm>
 #include <iostream>
-#include <stack>
+#include <queue>
 #include <vector>
+
+#include <fstream>
 
 void PipeMap::addPipes(const std::string_view line)
 {
     std::vector< Pipe > pipes;
     Id nextId;
-    nextId.column = m_pipes.size();
+    nextId.row = m_pipes.size();
     for (const auto& pipe : line) {
         pipes.emplace_back(nextId, pipe);
 
         if (pipe == 'S') {
             m_startPipe = nextId;
         }
-        ++nextId.row;
+        ++nextId.column;
+
+        pipes.emplace_back(nextId, '#');
+        ++nextId.column;
+    }
+    m_pipes.emplace_back(pipes);
+
+    pipes = std::vector< Pipe >{};
+    nextId.row += 1;
+    nextId.column = 0;
+    for (const auto& pipe : line) {
+        pipes.emplace_back(nextId, '#');
+        ++nextId.column;
+        pipes.emplace_back(nextId, '#');
+        ++nextId.column;
     }
     m_pipes.emplace_back(pipes);
 }
 
 void PipeMap::findLoop()
 {
-    auto& startPipe = getPipe(m_startPipe);
+    std::vector< std::vector< Id > > loops;
+    const auto& startPipe = getPipe(m_startPipe);
     for (const auto& neighbour : startPipe.getNeighbours()) {
         if (isValidId(neighbour)) {
             std::vector< Id > route;
@@ -36,7 +53,16 @@ void PipeMap::findLoop()
                 nextPipe = getNextPipe(*nextPipe, direction);
             }
             if (nextPipe.has_value() && nextPipe->getType() == 'S') {
-                m_loops.emplace_back(route);
+                route.push_back(nextPipe->getId());
+                loops.emplace_back(route);
+            }
+        }
+    }
+
+    for (auto i = 0; i < loops.size(); ++i) {
+        for (auto j = 0; j < loops.size(); ++j) {
+            if (i != j && loops[i].size() == loops[j].size()) {
+                m_loop = std::move(loops[i]);
             }
         }
     }
@@ -44,131 +70,87 @@ void PipeMap::findLoop()
 
 int PipeMap::getLongestDistance()
 {
-    calculateDistances();
+    return (std::ranges::count_if(m_loop, [this](const Id& id) { return getPipe(id).getType() != '#'; }) + 1) / 2;
+}
 
-    auto longestDistance = 0;
+int PipeMap::getEnclosedArea()
+{
     for (const auto& row : m_pipes) {
         for (const auto& pipe : row) {
-            if (pipe.getDistance() > longestDistance) {
-                longestDistance = pipe.getDistance();
+            if (!std::ranges::contains(m_visitedIds, pipe.getId()) && !isPartOfLoop(pipe.getId()) && isPipeEnclosedInLoop(pipe)) {
+                findEnclosedPipes(pipe);
             }
         }
     }
-    return longestDistance;
-}
 
-int PipeMap::getLargestEnclosedArea()
-{
-    auto totalArea = 0;
-
-    std::vector< Id > visitedIds;
-
+    std::ofstream f("output.txt");
     for (const auto& row : m_pipes) {
         for (const auto& pipe : row) {
-            auto visitedAlready = std::any_of(visitedIds.cbegin(), visitedIds.cend(), [pipe](const Id& id) {return id == pipe.getId(); });
-            if (visitedAlready) {
-                continue;
-            }
-            auto partOfLoop = isPartOfLoop(pipe.getId());
-            if (!partOfLoop && isPipeEnclosedInLoop(pipe)) {
-                std::cout << pipe.getId().column << ":" << pipe.getId().row << "\n";
-                continue;
-                const auto enclosedArea = getEnclosedArea(pipe, visitedIds);
-                if (enclosedArea != -1) {
-                    totalArea += enclosedArea;
-                }
+            const auto isInsideLoop = std::ranges::contains(m_insideLoop, pipe.getId());
+            if (isInsideLoop) {
+                f << "I";
+            } else if (isPartOfLoop(pipe.getId())) {
+                const auto type = pipe.prettyType();
+                std::string out{ type.cbegin(), type.cend() };
+                f << out;
+            } else {
+                f << "O";
             }
         }
+        f << "\n";
     }
 
-    return totalArea;
+    return std::ranges::count_if(m_insideLoop, [this](const Id& id) { return getPipe(id).getType() != '#'; });
 }
 
-void PipeMap::calculateDistances()
+void PipeMap::findEnclosedPipes(const Pipe& pipe)
 {
-    for (const auto& loop : m_loops) {
-        for (auto i = 0; i < loop.size(); ++i) {
-            auto distance = i + 1;
-            auto& pipe = getPipe(loop[i]);
-            if (pipe.getDistance() != -1 && pipe.getDistance() > distance) {
-                pipe.setDistance(distance);
-            }
-            else if (pipe.getDistance() == -1) {
-                pipe.setDistance(distance);
-            }
-        }
-    }
-}
-
-int PipeMap::getEnclosedArea(const Pipe& pipe, std::vector<Id>& visitedIdsGlobally)
-{
-    auto area = 1;
+    auto area = 0;
     if (pipe.getType() == 'S') {
-        return -1;
+        return;
     }
 
-    for (const auto& firstNeighbour : pipe.getNeighbours()) {
-        if (isPartOfLoop(firstNeighbour)) {
-            continue;
+    std::queue< Id > enclosedPipes;
+    m_visitedIds.push_back(pipe.getId());
+    enclosedPipes.push(pipe.getId());
+
+    std::vector<Id> visitedPipes;
+    visitedPipes.push_back(pipe.getId());
+    while (!enclosedPipes.empty()) {
+        const auto nextPipeId = enclosedPipes.front();
+        enclosedPipes.pop();
+        m_visitedIds.push_back(nextPipeId);
+
+        if (!isValidId(nextPipeId)) {
+            return;
         }
 
-        auto& firstPipe = getPipe(firstNeighbour);
-
-        if (!isPipeEnclosedInLoop(firstPipe)) {
-            return -1;
-        }
-        ++area;
-
-        std::stack< Pipe > enclosedPipes;
-        enclosedPipes.push(firstPipe);
-
-        std::vector< Id > visitedIds;
-        visitedIds.push_back(pipe.getId());
-        visitedIds.push_back(firstPipe.getId());
-
-        Pipe* lastPipe = nullptr;
-
-        while (!enclosedPipes.empty()) {
-            auto currentPipe = enclosedPipes.top();
-            lastPipe = &currentPipe;
-            enclosedPipes.pop();
-
-            for (const auto& neighbour : currentPipe.getNeighbours()) {
-                auto visitedAlready = std::any_of(visitedIds.cbegin(), visitedIds.cend(), [neighbour](const Id& id) { return id == neighbour; });
-                if (visitedAlready) {
-                    continue;
-                }
-
-                auto& neighbourPipe = getPipe(neighbour);
-                if (!isPartOfLoop(neighbour)) {
-                    if (isPipeEnclosedInLoop(neighbourPipe)) {
-                        area++;
-                        enclosedPipes.push(neighbourPipe);
-                        visitedIds.push_back(neighbour);
-                    } else {
-                        return -1;
-                    }
-                }
+        auto& nextPipe = getPipe(nextPipeId);
+        for (const auto& neighbour : nextPipe.getNeighbours()) {
+            const auto partOfInsideLoop = std::ranges::contains(visitedPipes, neighbour);
+            const auto partOfLoop = isPartOfLoop(neighbour);
+            if (!partOfInsideLoop && !partOfLoop) {
+                visitedPipes.push_back(neighbour);
+                enclosedPipes.push(neighbour);
             }
         }
-
-        if (lastPipe != nullptr && getNumberOfEnclosingPipes(*lastPipe) < 3) {
-            return -1;
-        }
-        visitedIdsGlobally.append_range(visitedIds);
     }
 
-    return area;
+    for (const auto& pipe : visitedPipes) {
+        if (!isPartOfLoop(pipe) && !std::ranges::contains(m_insideLoop, pipe)) {
+            m_insideLoop.emplace_back(pipe);
+        }
+    }
 }
 
 bool PipeMap::isValidId(const Id& id) const
 {
-    return id.column >= 0 && id.column < m_pipes.size() && id.row >= 0 && id.row < m_pipes[id.column].size();
+    return id.row >= 0 && id.row < m_pipes.size() && id.column >= 0 && id.column < m_pipes[id.row].size();
 }
 
 bool PipeMap::isPartOfLoop(const Id& id) const
 {
-    return std::any_of(getLoop().cbegin(), getLoop().cend(), [id](const Id& loopId) { return loopId == id; });
+    return std::ranges::contains(m_loop, id);
 }
 
 bool PipeMap::isPipeEnclosedInLoop(const Pipe& pipe) const
@@ -176,25 +158,25 @@ bool PipeMap::isPipeEnclosedInLoop(const Pipe& pipe) const
     return getNumberOfEnclosingPipes(pipe) >= 2;
 }
 
-int PipeMap::getNumberOfEnclosingPipes(const Pipe& pipe) const
+int PipeMap::getNumberOfEnclosingPipes(const Pipe& pipe, const std::vector<Id>& additionalPipes) const
 {
     const auto& neighbours = pipe.getNeighbours();
-    int neighboursFromLoop = 0;
+    auto enclosingNeighbours = 0;
     for (const auto& neighbour : neighbours) {
         if (isValidId(neighbour)) {
-            if (isPartOfLoop(neighbour)) {
-                ++neighboursFromLoop;
+            if (isPartOfLoop(neighbour) || std::ranges::contains(additionalPipes, neighbour)) {
+                ++enclosingNeighbours;
             }
         } else {
             return -1;
         }
     }
-    return neighboursFromLoop;
+    return enclosingNeighbours;
 }
 
-Pipe& PipeMap::getPipe(const Id& id)
+const Pipe& PipeMap::getPipe(const Id& id) const
 {
-    return m_pipes[id.column][id.row];
+    return m_pipes[id.row][id.column];
 }
 
 std::optional<Pipe> PipeMap::getNextPipe(const Pipe& pipe, Direction& direction)
@@ -209,15 +191,4 @@ std::optional<Pipe> PipeMap::getNextPipe(const Pipe& pipe, Direction& direction)
         }
     }
     return {};
-}
-
-const std::vector<Id>& PipeMap::getLoop() const
-{
-    auto biggestLoop = 0;
-    for (auto i = 1; i < m_loops.size(); ++i) {
-        if (m_loops[i].size() > m_loops[biggestLoop].size()) {
-            biggestLoop = i;
-        }
-    }
-    return m_loops[biggestLoop];
 }
