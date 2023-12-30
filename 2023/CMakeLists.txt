@@ -9,11 +9,12 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_library(Common
-	"common/TaskSolver.h"
-	"common/TaskSolver.cpp"
-	"common/StringManipulation.h"
-	"common/StringManipulation.cpp"
- "common/FileParser.h" "common/FileParser.cpp")
+	common/TaskSolver.cpp
+	common/StringManipulation.cpp
+	common/FileParser.cpp
+	common/Graphs/Id.cpp
+	common/Graphs/Node.cpp
+)
 
 include_directories(common)
 
@@ -28,6 +29,7 @@ add_subdirectory(07)
 add_subdirectory(08)
 add_subdirectory(09)
 add_subdirectory(10)
+add_subdirectory(11)
 add_subdirectory(13)
 add_subdirectory(15)
 add_subdirectory(16)
