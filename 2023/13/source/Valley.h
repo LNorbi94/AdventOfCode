@@ -4,19 +4,22 @@
 #include <optional>
 #include <vector>
 
+#include "ValleyMap.h"
+#include "LineDirection.h"
+
 class Valley
 {
 public:
     Valley() = default;
 
-    void addRow(std::string_view row);
+    void addRow(std::string row);
 
-    int64_t mirrorScore() const;
+    int64_t mirrorScore(size_t withDifference = 0) const;
 
 private:
-    std::optional< size_t > findVerticalMirrorLine() const;
-    std::vector< size_t > findVerticalMirrorLine(std::string_view line) const;
-    std::optional< size_t > findHorizontalMirrorLine() const;
+    std::optional< size_t > findMirrorLine(LineDirection direction, size_t withDifference) const;
 
-    std::vector< std::string > m_valleyMap;
+    size_t differenceOfPerfectMirror(LineDirection direction, size_t idx) const;
+
+    ValleyMap m_valleyMap;
 };

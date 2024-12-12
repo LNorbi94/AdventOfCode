@@ -8,6 +8,15 @@ project(
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
 add_library(Common
 	common/TaskSolver.cpp
 	common/StringManipulation.cpp
@@ -30,6 +39,7 @@ add_subdirectory(08)
 add_subdirectory(09)
 add_subdirectory(10)
 add_subdirectory(11)
+add_subdirectory(12)
 add_subdirectory(13)
 add_subdirectory(15)
 add_subdirectory(16)

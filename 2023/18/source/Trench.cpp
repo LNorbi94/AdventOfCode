@@ -1,5 +1,6 @@
 #include "Trench.h"
 
+#include <algorithm>
 #include <array>
 #include <sstream>
 #include <queue>
@@ -150,8 +151,8 @@ int Trench::floodFill(Id id, std::set< Id >& examinedIds)
     }
 
     for (const auto& id : insideTrench) {
-        auto containsTrench = std::count_if(m_insideTrench.cbegin(), m_insideTrench.cend(), [id](const auto& currentNode) { return currentNode->getId() == id->getId(); }) > 0;
-        containsTrench = containsTrench || std::count_if(m_trench.cbegin(), m_trench.cend(), [id](const auto& currentNode) { return currentNode->getId() == id->getId(); }) > 0;
+        auto containsTrench = std::ranges::count_if(m_insideTrench, [id](const auto& currentNode) { return currentNode->getId() == id->getId(); }) > 0;
+        containsTrench = containsTrench || std::ranges::count_if(m_trench, [id](const auto& currentNode) { return currentNode->getId() == id->getId(); }) > 0;
         if (!containsTrench) {
             const auto debugId = id->getId();
             m_insideTrench.insert(id);
