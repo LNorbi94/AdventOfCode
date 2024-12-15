@@ -8,6 +8,8 @@
 #include <memory>
 #include <vector>
 
+#include "Geometry/Point.hpp"
+
 class Trench
 {
 public:
@@ -16,24 +18,14 @@ public:
     void dig(std::string_view line);
     void alternativeDig(std::string_view line);
 
-    int getPossibleLavaVolume();
+    int64_t getPossibleLavaVolume();
 
 private:
-    int floodFill(Id id, std::set< Id >& examinedIds);
 
-    int countTrenchNeighbours(Id id);
-    int countTrenchNeighbours(Id id, std::set< std::shared_ptr< TrenchNode > >& insideTrench);
-    std::vector<Id> getNonTrenchNeighbours(Id id, std::set<std::shared_ptr<TrenchNode>>& insideTrench);
+    std::set<std::shared_ptr<TrenchNode>> m_trench;
+    std::set<std::shared_ptr<TrenchNode>> m_insideTrench;
+    std::shared_ptr<TrenchNode> m_start;
+    std::vector<Point> m_points;
 
-    bool isValidId(Id id) const;
-
-    void writeTrenchToFile(std::string_view fileName);
-
-    std::set< std::shared_ptr< TrenchNode > > m_trench;
-    std::set< std::shared_ptr< TrenchNode > > m_insideTrench;
-    std::shared_ptr< TrenchNode > m_start;
-    std::shared_ptr< TrenchNode > m_lastNode;
-
-    Id m_leftCorner;
-    Id m_rightCorner;
+    size_t pathLength = 0;
 };

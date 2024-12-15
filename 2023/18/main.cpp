@@ -13,6 +13,7 @@ public:
     FirstTaskSolver(const std::string_view fileName)
         : TaskSolver{ fileName }
     {
+        parseFile();
     }
 
     void parseLine(const std::string_view line) override
@@ -35,6 +36,7 @@ public:
     SecondTaskSolver(const std::string_view fileName)
         : TaskSolver{ fileName }
     {
+        parseFile();
     }
 
     void parseLine(std::string_view line) override
@@ -54,21 +56,19 @@ private:
 void solveFirstTask(const std::string_view file)
 {
     FirstTaskSolver f{ file };
-    f.solveTask();
     f.solveMap();
 }
 
 void solveSecondTask(const std::string_view file)
 {
     SecondTaskSolver f{ file };
-    f.solveTask();
     f.solveMap();
 }
 
 int main()
 {
-    //solveFirstTask("sample.txt");
-    //solveFirstTask("complete.txt");
+    solveFirstTask("sample.txt");
+    solveFirstTask("complete.txt");
     solveSecondTask("sample.txt");
     solveSecondTask("complete.txt");
 }
