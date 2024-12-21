@@ -12,9 +12,9 @@ TEST_F(DigitCounterTests, SampleTest)
 pqr3stu8vwx
 a1b2c3d4e5f
 treb7uchet)";
-    DigitCounter counter;
+    DigitAdder summer;
 
-    EXPECT_EQ(counter.CountDigits(input), 142);
+    EXPECT_EQ(summer.AddDigits(input), 142);
 }
 
 TEST_F(DigitCounterTests, Sample2Test)
@@ -26,7 +26,7 @@ xtwone3four
 4nineeightseven2
 zoneight234
 7pqrstsixteen)";
-    DigitCounter counter{DigitCounter::DigitType::NormalOrSpelledOut};
+    DigitAdder summer{DigitAdder::DigitType::NormalOrSpelledOut};
 
-    EXPECT_EQ(counter.CountDigits(input), 281);
+    EXPECT_EQ(summer.AddDigits(input), 281);
 }

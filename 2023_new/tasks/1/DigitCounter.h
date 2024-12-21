@@ -5,7 +5,7 @@
 #include <string>
 #include <filesystem>
 
-class DigitCounter
+class DigitAdder
 {
 public:
     enum class DigitType
@@ -14,10 +14,10 @@ public:
         NormalOrSpelledOut
     };
 
-    DigitCounter(DigitType digitType = DigitType::Normal);
+    DigitAdder(DigitType digitType = DigitType::Normal);
 
-    size_t CountDigits(const std::filesystem::path &path);
-    size_t CountDigits(const std::string &fileName);
+    size_t AddDigits(const std::filesystem::path &path);
+    size_t AddDigits(const std::string &fileName);
 
 private:
     void ParseLine(std::string_view line);
