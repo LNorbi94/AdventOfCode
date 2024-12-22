@@ -7,7 +7,7 @@ FileParser::FileParser(const std::string_view inputFile)
 {
 }
 
-void FileParser::ParseFile(std::function<void(std::string_view)> parseLine) const
+void FileParser::ParseFile(std::function<void(const std::string &)> parseLine) const
 {
     std::ifstream stream{m_fileName};
 

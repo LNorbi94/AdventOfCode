@@ -2,7 +2,7 @@
 
 #include "common/ITask.h"
 
-class FirstTask : public ITask
+class SecondTask : public ITask
 {
 public:
     void SolveFirstPart() override;

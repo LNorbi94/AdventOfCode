@@ -29,9 +29,9 @@ size_t DigitAdder::AddDigits(const std::filesystem::path &path)
     return m_sum;
 }
 
-size_t DigitAdder::AddDigits(const std::string &input)
+size_t DigitAdder::AddDigits(const std::string &inputString)
 {
-    const auto lines = common::splitToMultipleString(input, '\n');
+    const auto lines = common::splitToMultipleString(inputString, '\n');
     std::ranges::for_each(lines, std::bind_front(&DigitAdder::ParseLine, this));
     return m_sum;
 }

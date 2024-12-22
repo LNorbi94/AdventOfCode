@@ -1,9 +1,31 @@
+#include <argparse/argparse.hpp>
+
 #include "TaskStore.h"
 
-int main()
+int main(int argc, char *argv[])
 {
     TaskStore taskStore;
-    taskStore.GetTask("1")->SolveFirstTask("1.txt");
-    taskStore.GetTask("1")->SolveSecondTask("1.txt");
+    argparse::ArgumentParser program("AoC2023");
+
+    program.add_argument("-t", "--task")
+        .default_value(std::string("1"))
+        .help("specify the task to run.");
+
+    try
+    {
+        program.parse_args(argc, argv);
+    }
+    catch (const std::exception &err)
+    {
+        std::cerr << err.what() << std::endl;
+        std::cerr << program;
+        return 1;
+    }
+
+    auto task = program.get<std::string>("--task");
+
+    taskStore.GetTask(task)->SolveFirstPart();
+    taskStore.GetTask(task)->SolveSecondPart();
+
     return 0;
 }

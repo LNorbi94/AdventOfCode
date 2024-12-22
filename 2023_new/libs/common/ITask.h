@@ -7,6 +7,6 @@ class ITask
 public:
     virtual ~ITask() = default;
 
-    virtual void SolveFirstTask(const std::string &inputFileName) = 0;
-    virtual void SolveSecondTask(const std::string &inputFileName) = 0;
+    virtual void SolveFirstPart() = 0;
+    virtual void SolveSecondPart() = 0;
 };

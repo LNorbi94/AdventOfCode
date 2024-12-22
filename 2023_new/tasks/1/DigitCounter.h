@@ -17,7 +17,7 @@ public:
     DigitAdder(DigitType digitType = DigitType::Normal);
 
     size_t AddDigits(const std::filesystem::path &path);
-    size_t AddDigits(const std::string &fileName);
+    size_t AddDigits(const std::string &inputString);
 
 private:
     void ParseLine(std::string_view line);

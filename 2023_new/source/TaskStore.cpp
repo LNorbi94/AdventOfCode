@@ -1,6 +1,7 @@
 #include "TaskStore.h"
 
-#include "1/FirstTask.h"
+#include <1/FirstTask.h>
+#include <2/SecondTask.h>
 
 TaskStore::TaskStore()
 {
@@ -15,6 +16,7 @@ ITask *TaskStore::GetTask(const std::string &taskName)
 void TaskStore::RegisterTasks()
 {
     RegisterTask("1", std::make_unique<FirstTask>());
+    RegisterTask("2", std::make_unique<SecondTask>());
 }
 
 void TaskStore::RegisterTask(const std::string &taskName, std::unique_ptr<ITask> task)
