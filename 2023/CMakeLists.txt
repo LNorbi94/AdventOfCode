@@ -17,36 +17,63 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_library(Common
-	common/TaskSolver.cpp
-	common/StringManipulation.cpp
-	common/FileParser.cpp
-	common/Graphs/Id.cpp
-	common/Graphs/Node.cpp
+# fetch latest argparse
+include(FetchContent)
+FetchContent_Declare(
+    argparse
+    GIT_REPOSITORY https://github.com/p-ranav/argparse.git
 )
+FetchContent_MakeAvailable(argparse)
 
-include_directories(common)
+file(GLOB MAIN_SRC_FILES CONFIGURE_DEPENDS "source/*.cpp")
+add_executable(AoC2023 ${MAIN_SRC_FILES})
 
-# 29 stars at end of December 25th
-add_subdirectory(01)
-add_subdirectory(02)
-add_subdirectory(03)
-add_subdirectory(04)
-add_subdirectory(05)
-add_subdirectory(06)
-add_subdirectory(07)
-add_subdirectory(08)
-add_subdirectory(09)
-add_subdirectory(10)
-add_subdirectory(11)
-add_subdirectory(12)
-add_subdirectory(13)
-add_subdirectory(14)
-add_subdirectory(15)
-add_subdirectory(16)
-add_subdirectory(17)
-add_subdirectory(18)
-add_subdirectory(19)
-add_subdirectory(20)
-add_subdirectory(21)
-add_subdirectory(23)
+add_subdirectory(libs)
+
+set(LIBRARY_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/libs)
+set(TASKS_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/tasks)
+target_link_libraries(AoC2023 PRIVATE Common argparse)
+target_include_directories(AoC2023 PRIVATE ${LIBRARY_INCLUDES})
+target_include_directories(AoC2023 PRIVATE ${TASKS_INCLUDES})
+
+foreach(X RANGE 1 5) # to 25...
+  file(GLOB TASK_SRC_FILES CONFIGURE_DEPENDS "tasks/${X}/*.cpp")
+  add_library(${X}_lib
+    ${TASK_SRC_FILES}
+  )
+  target_link_libraries(AoC2023 PRIVATE ${X}_lib)
+  target_include_directories(${X}_lib PRIVATE ${LIBRARY_INCLUDES})
+
+  if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/Debug/${X}.txt")
+    execute_process(COMMAND curl https://adventofcode.com/2023/day/${X}/input --cookie "session=$ENV{AOC_SESSION}"
+                      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+                      OUTPUT_FILE "${CMAKE_CURRENT_BINARY_DIR}/Debug/${X}.txt")
+    execute_process(COMMAND curl https://adventofcode.com/2023/day/${X}/input --cookie "session=$ENV{AOC_SESSION}"
+                      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+                      OUTPUT_FILE "${CMAKE_CURRENT_BINARY_DIR}/Release/${X}.txt")
+  endif()
+
+  file(GLOB TEST_FILES CONFIGURE_DEPENDS "tests/${X}/*.cpp")
+  if(NOT TARGET Tests)
+    add_executable(Tests ${TEST_FILES})
+    target_include_directories(Tests PRIVATE ${LIBRARY_INCLUDES})
+    target_include_directories(Tests PRIVATE ${TASKS_INCLUDES})
+    
+    target_link_libraries(
+      Tests
+      Common
+      GTest::gtest_main
+      ${X}_lib
+    )
+  else()
+    target_sources(Tests PRIVATE ${TEST_FILES})
+    target_link_libraries(Tests ${X}_lib
+    )
+  endif()
+
+endforeach()
+
+enable_testing()
+
+include(GoogleTest)
+gtest_discover_tests(Tests)
