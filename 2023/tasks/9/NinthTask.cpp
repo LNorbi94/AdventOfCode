@@ -1,13 +1,18 @@
-#include "TaskSolver.h"
-#include "StringManipulation.h"
+#include "common/TaskSolver.h"
+#include "common/StringManipulation.h"
 
-#include <regex>
-#include <set>
-#include <map>
+#include <functional>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <stack>
+#include "NinthTask.h"
+#include <filesystem>
+
+namespace
+{
+    const std::filesystem::path inputFileName = "9.txt";
+}
 
 class OasisHistory
 {
@@ -61,15 +66,16 @@ private:
     std::vector<std::vector<int64_t>> m_history;
 };
 
-class FourthTaskPartOneSolver : public TaskSolver
+class NinthTaskPartOneSolver : public TaskSolver
 {
 public:
-    FourthTaskPartOneSolver(const std::string_view fileName)
+    NinthTaskPartOneSolver(const std::string_view fileName)
         : TaskSolver{fileName}
     {
+        ParseFile(std::bind_front(&NinthTaskPartOneSolver::parseLine, this));
     }
 
-    void parseLine(std::string_view line) override
+    void parseLine(std::string_view line)
     {
         auto numbers = common::extractNumbers<int64_t>(line.data());
         auto history = OasisHistory{numbers};
@@ -77,15 +83,16 @@ public:
     }
 };
 
-class FourthTaskPartTwoSolver : public TaskSolver
+class NinthTaskPartTwoSolver : public TaskSolver
 {
 public:
-    FourthTaskPartTwoSolver(const std::string_view fileName)
+    NinthTaskPartTwoSolver(const std::string_view fileName)
         : TaskSolver{fileName}
     {
+        ParseFile(std::bind_front(&NinthTaskPartTwoSolver::parseLine, this));
     }
 
-    void parseLine(std::string_view line) override
+    void parseLine(std::string_view line)
     {
         auto numbers = common::extractNumbers<int64_t>(line.data());
         auto history = OasisHistory{numbers};
@@ -93,22 +100,14 @@ public:
     }
 };
 
-void solveFirstTask(const std::string_view file)
+void NinthTask::SolveFirstPart()
 {
-    FourthTaskPartOneSolver f{file};
+    NinthTaskPartOneSolver f{inputFileName.string()};
     f.solveTask();
 }
 
-void solveSecondTask(const std::string_view file)
+void NinthTask::SolveSecondPart()
 {
-    FourthTaskPartTwoSolver f{file};
+    NinthTaskPartTwoSolver f{inputFileName.string()};
     f.solveTask();
-}
-
-int main()
-{
-    solveFirstTask("sample.txt");
-    solveFirstTask("complete.txt");
-    solveSecondTask("sample.txt");
-    solveSecondTask("complete.txt");
 }

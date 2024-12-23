@@ -1,6 +1,6 @@
 
-#include "TaskSolver.h"
-#include "StringManipulation.h"
+#include "common/TaskSolver.h"
+#include "common/StringManipulation.h"
 
 #include <regex>
 #include <set>
@@ -9,6 +9,13 @@
 #include <iostream>
 #include <sstream>
 #include <stack>
+#include <filesystem>
+#include "EighthTask.h"
+
+namespace
+{
+    const std::filesystem::path inputFileName = "8.txt";
+}
 
 class MapNode
 {
@@ -38,10 +45,10 @@ private:
     std::string m_right;
 };
 
-class FourthTaskPartOneSolver
+class EighthTaskPartOneSolver
 {
 public:
-    FourthTaskPartOneSolver(const std::string_view fileName)
+    EighthTaskPartOneSolver(const std::string_view fileName)
     {
         std::ifstream stream{fileName.data()};
 
@@ -80,10 +87,10 @@ public:
     }
 };
 
-class FourthTaskPartTwoSolver
+class EighthTaskPartTwoSolver
 {
 public:
-    FourthTaskPartTwoSolver(const std::string_view fileName)
+    EighthTaskPartTwoSolver(const std::string_view fileName)
     {
         std::ifstream stream{fileName.data()};
 
@@ -172,20 +179,12 @@ public:
     }
 };
 
-void solveFirstTask(const std::string_view file)
+void EighthTask::SolveFirstPart()
 {
-    FourthTaskPartOneSolver f{file};
+    EighthTaskPartOneSolver f{inputFileName.string()};
 }
 
-void solveSecondTask(const std::string_view file)
+void EighthTask::SolveSecondPart()
 {
-    FourthTaskPartTwoSolver f{file};
-}
-
-int main()
-{
-    solveFirstTask("sample.txt");
-    solveFirstTask("complete.txt");
-    solveSecondTask("sample2.txt");
-    solveSecondTask("complete.txt");
+    EighthTaskPartTwoSolver f{inputFileName.string()};
 }
