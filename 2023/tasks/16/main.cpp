@@ -7,11 +7,11 @@
 #include <iostream>
 #include <vector>
 
-class FirstTaskSolver : public TaskSolver
+class FourthTaskPartOneSolver : public TaskSolver
 {
 public:
-    FirstTaskSolver(const std::string_view fileName)
-        : TaskSolver{ fileName }
+    FourthTaskPartOneSolver(const std::string_view fileName)
+        : TaskSolver{fileName}
     {
     }
 
@@ -22,18 +22,18 @@ public:
 
     void solveMap()
     {
-        std::cout << m_tileMap.getNumberOfEnergizedFields( { Direction::Right, Id{ 0, 0 } } ) << "\n";
+        std::cout << m_tileMap.getNumberOfEnergizedFields({Direction::Right, Id{0, 0}}) << "\n";
     }
 
 private:
     TileMap m_tileMap;
 };
 
-class SecondTaskSolver : public TaskSolver
+class FourthTaskPartTwoSolver : public TaskSolver
 {
 public:
-    SecondTaskSolver(const std::string_view fileName)
-        : TaskSolver{ fileName }
+    FourthTaskPartTwoSolver(const std::string_view fileName)
+        : TaskSolver{fileName}
     {
     }
 
@@ -53,14 +53,14 @@ private:
 
 void solveFirstTask(const std::string_view file)
 {
-    FirstTaskSolver f{ file };
+    FourthTaskPartOneSolver f{file};
     f.solveTask();
     f.solveMap();
 }
 
 void solveSecondTask(const std::string_view file)
 {
-    SecondTaskSolver f{ file };
+    FourthTaskPartTwoSolver f{file};
     f.solveTask();
     f.solveMap();
 }

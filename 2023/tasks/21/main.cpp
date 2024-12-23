@@ -7,12 +7,11 @@
 #include <iostream>
 #include <vector>
 
-class FirstTaskSolver : public TaskSolver
+class FourthTaskPartOneSolver : public TaskSolver
 {
 public:
-    FirstTaskSolver(const std::string_view fileName, const int numberOfSteps)
-        : TaskSolver{ fileName }
-        , m_steps{ numberOfSteps }
+    FourthTaskPartOneSolver(const std::string_view fileName, const int numberOfSteps)
+        : TaskSolver{fileName}, m_steps{numberOfSteps}
     {
     }
 
@@ -23,7 +22,7 @@ public:
 
     void solveMap()
     {
-        std::cout << m_tileMap.getNumberOfPlots( m_steps ) << "\n";
+        std::cout << m_tileMap.getNumberOfPlots(m_steps) << "\n";
     }
 
 private:
@@ -31,11 +30,11 @@ private:
     int m_steps = 0;
 };
 
-class SecondTaskSolver : public TaskSolver
+class FourthTaskPartTwoSolver : public TaskSolver
 {
 public:
-    SecondTaskSolver(const std::string_view fileName)
-        : TaskSolver{ fileName }
+    FourthTaskPartTwoSolver(const std::string_view fileName)
+        : TaskSolver{fileName}
     {
     }
 
@@ -46,7 +45,7 @@ public:
 
     void solveMap()
     {
-        //std::cout << m_tileMap.getMaximumNumberOfEnergizedFields() << "\n";
+        // std::cout << m_tileMap.getMaximumNumberOfEnergizedFields() << "\n";
     }
 
 private:
@@ -55,14 +54,14 @@ private:
 
 void solveFirstTask(const std::string_view file, const int numberOfSteps)
 {
-    FirstTaskSolver f{ file, numberOfSteps };
+    FourthTaskPartOneSolver f{file, numberOfSteps};
     f.solveTask();
     f.solveMap();
 }
 
 void solveSecondTask(const std::string_view file)
 {
-    SecondTaskSolver f{ file };
+    FourthTaskPartTwoSolver f{file};
     f.solveTask();
     f.solveMap();
 }
@@ -71,6 +70,6 @@ int main()
 {
     solveFirstTask("sample.txt", 6);
     solveFirstTask("complete.txt", 64);
-    //solveSecondTask("sample.txt");
-    //solveSecondTask("complete.txt");
+    // solveSecondTask("sample.txt");
+    // solveSecondTask("complete.txt");
 }

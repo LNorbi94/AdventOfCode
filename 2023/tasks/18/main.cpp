@@ -7,11 +7,11 @@
 #include <iostream>
 #include <vector>
 
-class FirstTaskSolver : public TaskSolver
+class FourthTaskPartOneSolver : public TaskSolver
 {
 public:
-    FirstTaskSolver(const std::string_view fileName)
-        : TaskSolver{ fileName }
+    FourthTaskPartOneSolver(const std::string_view fileName)
+        : TaskSolver{fileName}
     {
         parseFile();
     }
@@ -30,11 +30,11 @@ private:
     Trench m_trench;
 };
 
-class SecondTaskSolver : public TaskSolver
+class FourthTaskPartTwoSolver : public TaskSolver
 {
 public:
-    SecondTaskSolver(const std::string_view fileName)
-        : TaskSolver{ fileName }
+    FourthTaskPartTwoSolver(const std::string_view fileName)
+        : TaskSolver{fileName}
     {
         parseFile();
     }
@@ -55,13 +55,13 @@ private:
 
 void solveFirstTask(const std::string_view file)
 {
-    FirstTaskSolver f{ file };
+    FourthTaskPartOneSolver f{file};
     f.solveMap();
 }
 
 void solveSecondTask(const std::string_view file)
 {
-    SecondTaskSolver f{ file };
+    FourthTaskPartTwoSolver f{file};
     f.solveMap();
 }
 

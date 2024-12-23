@@ -14,10 +14,10 @@ namespace
     const std::filesystem::path inputFileName = "4.txt";
 }
 
-class Card
+class FourthCard
 {
 public:
-    Card(const int cardNumber)
+    FourthCard(const int cardNumber)
         : m_cardNumber{cardNumber}
     {
     }
@@ -65,13 +65,13 @@ private:
     int m_cardNumber = 0;
 };
 
-class FirstTaskSolver : public TaskSolver
+class FourthTaskPartOneSolver : public TaskSolver
 {
 public:
-    FirstTaskSolver(const std::string_view fileName)
+    FourthTaskPartOneSolver(const std::string_view fileName)
         : TaskSolver{fileName}
     {
-        ParseFile(std::bind_front(&FirstTaskSolver::parseLine, this));
+        ParseFile(std::bind_front(&FourthTaskPartOneSolver::parseLine, this));
     }
 
     void parseLine(const std::string &line)
@@ -83,7 +83,7 @@ public:
         {
             return;
         }
-        Card card{winningNumbers[0]};
+        FourthCard card{winningNumbers[0]};
         for (auto i = 1; i < winningNumbers.size(); ++i)
         {
             card.addWinningNumber(winningNumbers[i]);
@@ -99,13 +99,13 @@ public:
     }
 };
 
-class SecondTaskSolver : public TaskSolver
+class FourthTaskPartTwoSolver : public TaskSolver
 {
 public:
-    SecondTaskSolver(const std::string_view fileName)
+    FourthTaskPartTwoSolver(const std::string_view fileName)
         : TaskSolver{fileName}
     {
-        ParseFile(std::bind_front(&SecondTaskSolver::parseLine, this));
+        ParseFile(std::bind_front(&FourthTaskPartTwoSolver::parseLine, this));
     }
 
     void parseLine(const std::string &line)
@@ -120,7 +120,7 @@ public:
 
         const auto cardNumber = winningNumbers[0];
         auto copies = 1 + m_extraCopies[cardNumber];
-        Card card{cardNumber};
+        FourthCard card{cardNumber};
         for (auto i = 1; i < winningNumbers.size(); ++i)
         {
             card.addWinningNumber(winningNumbers[i]);
@@ -147,12 +147,12 @@ private:
 
 void FourthTask::SolveFirstPart()
 {
-    FirstTaskSolver f{inputFileName.string()};
+    FourthTaskPartOneSolver f{inputFileName.string()};
     f.solveTask();
 }
 
 void FourthTask::SolveSecondPart()
 {
-    SecondTaskSolver f{inputFileName.string()};
+    FourthTaskPartTwoSolver f{inputFileName.string()};
     f.solveTask();
 }

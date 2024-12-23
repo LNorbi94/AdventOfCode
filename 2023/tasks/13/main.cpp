@@ -12,73 +12,80 @@
 #include <sstream>
 #include <stack>
 
-
-class FirstTaskSolver
+class FourthTaskPartOneSolver
 {
 public:
-    FirstTaskSolver(const std::string_view fileName)
+    FourthTaskPartOneSolver(const std::string_view fileName)
     {
-        std::ifstream stream{ fileName.data() };
+        std::ifstream stream{fileName.data()};
 
-        std::vector< Valley > valleys;
+        std::vector<Valley> valleys;
         Valley valley;
         std::string line;
-        while (std::getline(stream, line)) {
-            if (line.empty()) {
+        while (std::getline(stream, line))
+        {
+            if (line.empty())
+            {
                 valleys.push_back(valley);
                 valley = Valley{};
-            } else {
+            }
+            else
+            {
                 valley.addRow(line);
             }
         }
         valleys.push_back(valley);
 
         auto solution = 0;
-        for (const auto& valley : valleys) {
+        for (const auto &valley : valleys)
+        {
             solution += valley.mirrorScore();
         }
         std::cout << solution << "\n";
     }
 };
 
-class SecondTaskSolver
+class FourthTaskPartTwoSolver
 {
 public:
-    SecondTaskSolver(const std::string_view fileName)
+    FourthTaskPartTwoSolver(const std::string_view fileName)
     {
-        std::ifstream stream{ fileName.data() };
+        std::ifstream stream{fileName.data()};
 
-        std::vector< Valley > valleys;
+        std::vector<Valley> valleys;
         Valley valley;
         std::string line;
-        while (std::getline(stream, line)) {
-            if (line.empty()) {
+        while (std::getline(stream, line))
+        {
+            if (line.empty())
+            {
                 valleys.push_back(valley);
                 valley = Valley{};
             }
-            else {
+            else
+            {
                 valley.addRow(line);
             }
         }
         valleys.push_back(valley);
 
         auto solution = 0;
-        for (const auto& valley : valleys) {
+        for (const auto &valley : valleys)
+        {
             solution += valley.mirrorScore(1);
         }
         std::cout << solution << "\n";
     }
-
 };
 
 void solveFirstTask(const std::string_view file)
 {
-    FirstTaskSolver f{ file };
+    FourthTaskPartOneSolver f{file};
 }
 
 void solveSecondTask(const std::string_view file)
 {
-    SecondTaskSolver f{ file };
+    FourthTaskPartTwoSolver f{file};
 }
 
 int main()

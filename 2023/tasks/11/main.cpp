@@ -5,11 +5,11 @@
 
 #include <iostream>
 
-class FirstTaskSolver : public FileParser
+class FourthTaskPartOneSolver : public FileParser
 {
 public:
-    FirstTaskSolver(const std::string_view fileName)
-        : FileParser{ fileName }
+    FourthTaskPartOneSolver(const std::string_view fileName)
+        : FileParser{fileName}
     {
         parseFile();
         m_map.correctLengthForExpansion();
@@ -29,11 +29,11 @@ private:
     GalaxyMap m_map;
 };
 
-class SecondTaskSolver : public FileParser
+class FourthTaskPartTwoSolver : public FileParser
 {
 public:
-    SecondTaskSolver(const std::string_view fileName)
-        : FileParser{ fileName }
+    FourthTaskPartTwoSolver(const std::string_view fileName)
+        : FileParser{fileName}
     {
         parseFile();
         m_map.correctLengthForExpansion();
@@ -55,20 +55,20 @@ private:
 
 void solveFirstTask(const std::string_view file)
 {
-    FirstTaskSolver f{ file };
+    FourthTaskPartOneSolver f{file};
     f.solveMap();
 }
 
 void solveSecondTask(const std::string_view file)
 {
-    SecondTaskSolver f{ file };
+    FourthTaskPartTwoSolver f{file};
     f.solveMap();
 }
 
 int main()
 {
     solveFirstTask("sample.txt");
-    //solveFirstTask("complete.txt");
+    // solveFirstTask("complete.txt");
     solveSecondTask("sample.txt");
     solveSecondTask("complete.txt");
 }

@@ -183,10 +183,10 @@ private:
     std::vector<Seed> m_seeds;
 };
 
-class FirstTaskSolver
+class FifthTaskPartOneSolver
 {
 public:
-    FirstTaskSolver(const std::string_view fileName)
+    FifthTaskPartOneSolver(const std::string_view fileName)
     {
         std::ifstream stream{fileName.data()};
 
@@ -247,10 +247,10 @@ private:
     Map m_humidityToLocation;
 };
 
-class SecondTaskSolver
+class FifthTaskPartTwoSolver
 {
 public:
-    SecondTaskSolver(const std::string_view fileName)
+    FifthTaskPartTwoSolver(const std::string_view fileName)
     {
         std::ifstream stream{fileName.data()};
 
@@ -319,10 +319,10 @@ private:
 
 void FifthTask::SolveFirstPart()
 {
-    FirstTaskSolver f{inputFileName.string()};
+    FifthTaskPartOneSolver f{inputFileName.string()};
 }
 
 void FifthTask::SolveSecondPart()
 {
-    SecondTaskSolver f{inputFileName.string()};
+    FifthTaskPartTwoSolver f{inputFileName.string()};
 }

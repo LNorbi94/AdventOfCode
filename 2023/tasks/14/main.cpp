@@ -12,10 +12,10 @@
 #include <sstream>
 #include <stack>
 
-class FirstTaskSolver : public FileParser
+class FourthTaskPartOneSolver : public FileParser
 {
 public:
-    FirstTaskSolver(const std::string_view fileName)
+    FourthTaskPartOneSolver(const std::string_view fileName)
         : FileParser{fileName}
     {
         parseFile();
@@ -36,11 +36,11 @@ private:
     Platform p;
 };
 
-class SecondTaskSolver : public FileParser
+class FourthTaskPartTwoSolver : public FileParser
 {
 public:
-    SecondTaskSolver(const std::string_view fileName)
-        : FileParser{ fileName }
+    FourthTaskPartTwoSolver(const std::string_view fileName)
+        : FileParser{fileName}
     {
         parseFile();
     }
@@ -62,13 +62,13 @@ private:
 
 void solveFirstTask(const std::string_view file)
 {
-    FirstTaskSolver f{file};
+    FourthTaskPartOneSolver f{file};
     f.solve();
 }
 
 void solveSecondTask(const std::string_view file)
 {
-    SecondTaskSolver f{file};
+    FourthTaskPartTwoSolver f{file};
     f.solve();
 }
 

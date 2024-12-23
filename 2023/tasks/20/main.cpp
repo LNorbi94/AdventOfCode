@@ -1,14 +1,14 @@
 #include "TaskSolver.h"
 
-//#include "source/WorkflowOrganizer.h"
+// #include "source/WorkflowOrganizer.h"
 
 #include <iostream>
 #include <fstream>
 
-class FirstTaskSolver
+class FourthTaskPartOneSolver
 {
 public:
-    FirstTaskSolver(const std::string_view fileName)
+    FourthTaskPartOneSolver(const std::string_view fileName)
     {
         /*std::ifstream stream{ fileName.data() };
 
@@ -29,23 +29,22 @@ public:
 private:
 };
 
-class SecondTaskSolver
+class FourthTaskPartTwoSolver
 {
 public:
-    SecondTaskSolver(const std::string_view fileName)
+    FourthTaskPartTwoSolver(const std::string_view fileName)
     {
     }
-
 };
 
 void solveFirstTask(const std::string_view file)
 {
-    FirstTaskSolver f{ file };
+    FourthTaskPartOneSolver f{file};
 }
 
 void solveSecondTask(const std::string_view file)
 {
-    SecondTaskSolver f{ file };
+    FourthTaskPartTwoSolver f{file};
 }
 
 int main()

@@ -14,21 +14,20 @@ class MapNode
 {
 public:
     MapNode(const std::string_view id, const std::string_view left, const std::string_view right)
-        : m_id{ id }
-        , m_left{ left }
-        , m_right{ right }
-    {}
+        : m_id{id}, m_left{left}, m_right{right}
+    {
+    }
 
-    const std::string& getId() const
+    const std::string &getId() const
     {
         return m_id;
     }
 
-    const std::string& goLeft() const
+    const std::string &goLeft() const
     {
         return m_left;
     }
-    const std::string& goRight() const
+    const std::string &goRight() const
     {
         return m_right;
     }
@@ -39,30 +38,34 @@ private:
     std::string m_right;
 };
 
-class FirstTaskSolver
+class FourthTaskPartOneSolver
 {
 public:
-    FirstTaskSolver(const std::string_view fileName)
+    FourthTaskPartOneSolver(const std::string_view fileName)
     {
-        std::ifstream stream{ fileName.data() };
+        std::ifstream stream{fileName.data()};
 
         std::string line;
         std::getline(stream, line);
         const auto instructions = line;
         std::getline(stream, line);
 
-        std::map< std::string, MapNode > nodes;
-        while (std::getline(stream, line)) {
+        std::map<std::string, MapNode> nodes;
+        while (std::getline(stream, line))
+        {
             const auto parsedNodes = common::extractWords(line);
-            nodes.emplace(parsedNodes[0], MapNode{ parsedNodes[0], parsedNodes[1], parsedNodes[2] });
+            nodes.emplace(parsedNodes[0], MapNode{parsedNodes[0], parsedNodes[1], parsedNodes[2]});
         }
 
         auto steps = 0;
         auto nextNode = nodes.at("AAA");
-        while (nextNode.getId() != "ZZZ") {
-            for (auto i = 0; i < instructions.size() && nextNode.getId() != "ZZZ"; ++i) {
+        while (nextNode.getId() != "ZZZ")
+        {
+            for (auto i = 0; i < instructions.size() && nextNode.getId() != "ZZZ"; ++i)
+            {
                 steps++;
-                switch (instructions[i]) {
+                switch (instructions[i])
+                {
                 case 'L':
                     nextNode = nodes.at(nextNode.goLeft());
                     break;
@@ -77,37 +80,44 @@ public:
     }
 };
 
-class SecondTaskSolver
+class FourthTaskPartTwoSolver
 {
 public:
-    SecondTaskSolver(const std::string_view fileName)
+    FourthTaskPartTwoSolver(const std::string_view fileName)
     {
-        std::ifstream stream{ fileName.data() };
+        std::ifstream stream{fileName.data()};
 
         std::string line;
         std::getline(stream, line);
         const auto instructions = line;
         std::getline(stream, line);
 
-        std::map< std::string, MapNode > nodes;
-        while (std::getline(stream, line)) {
+        std::map<std::string, MapNode> nodes;
+        while (std::getline(stream, line))
+        {
             const auto parsedNodes = common::extractWords(line);
-            nodes.emplace(parsedNodes[0], MapNode{ parsedNodes[0], parsedNodes[1], parsedNodes[2] });
+            nodes.emplace(parsedNodes[0], MapNode{parsedNodes[0], parsedNodes[1], parsedNodes[2]});
         }
 
         auto instruction = 0;
         size_t steps = 0;
-        std::vector< MapNode > startingNodes;
-        for (const auto& [id, node] : nodes) {
-            if (id.ends_with('A')) {
+        std::vector<MapNode> startingNodes;
+        for (const auto &[id, node] : nodes)
+        {
+            if (id.ends_with('A'))
+            {
                 startingNodes.push_back(node);
             }
         }
-        std::vector< int > endReached;
-        while (endReached.size() != startingNodes.size()) {
-            for (auto& node : startingNodes) {
-                if (!node.getId().ends_with('Z')) {
-                    switch (instructions[instruction]) {
+        std::vector<int> endReached;
+        while (endReached.size() != startingNodes.size())
+        {
+            for (auto &node : startingNodes)
+            {
+                if (!node.getId().ends_with('Z'))
+                {
+                    switch (instructions[instruction])
+                    {
                     case 'L':
                         node = nodes.at(node.goLeft());
                         break;
@@ -115,26 +125,32 @@ public:
                         node = nodes.at(node.goRight());
                         break;
                     }
-                    if (node.getId().ends_with('Z')) {
+                    if (node.getId().ends_with('Z'))
+                    {
                         endReached.push_back(steps + 1);
                     }
                 }
             }
-            if (instruction + 1 < instructions.size()) {
+            if (instruction + 1 < instructions.size())
+            {
                 ++instruction;
             }
-            else {
+            else
+            {
                 instruction = 0;
             }
             ++steps;
         }
 
-        if (endReached.size() == 2) {
+        if (endReached.size() == 2)
+        {
             std::cout << getLeastCommonMultiple(endReached[0], endReached[1]) << "\n";
         }
-        else if (endReached.size() > 2) {
+        else if (endReached.size() > 2)
+        {
             auto solution = getLeastCommonMultiple(endReached[0], endReached[1]);
-            for (auto i = 2; i < endReached.size(); ++i) {
+            for (auto i = 2; i < endReached.size(); ++i)
+            {
                 solution = getLeastCommonMultiple(endReached[i], solution);
             }
             std::cout << solution << "\n";
@@ -145,7 +161,8 @@ public:
     {
         auto gcd = a;
         auto temp = b;
-        while (temp != 0) {
+        while (temp != 0)
+        {
             auto c = gcd % temp;
             gcd = temp;
             temp = c;
@@ -153,17 +170,16 @@ public:
 
         return a * b / gcd;
     }
-
 };
 
 void solveFirstTask(const std::string_view file)
 {
-    FirstTaskSolver f{ file };
+    FourthTaskPartOneSolver f{file};
 }
 
 void solveSecondTask(const std::string_view file)
 {
-    SecondTaskSolver f{ file };
+    FourthTaskPartTwoSolver f{file};
 }
 
 int main()

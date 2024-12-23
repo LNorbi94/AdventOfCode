@@ -8,11 +8,11 @@
 
 #include <deque>
 
-class FirstTaskSolver : public FileParser
+class FourthTaskPartOneSolver : public FileParser
 {
 public:
-    FirstTaskSolver(const std::string_view fileName)
-        : FileParser{ fileName }
+    FourthTaskPartOneSolver(const std::string_view fileName)
+        : FileParser{fileName}
     {
         parseFile();
     }
@@ -23,7 +23,8 @@ public:
         m_springInventories.emplace_back(input[0]);
         const auto damagedSprings = common::splitToMultipleString(input[1], ',');
         std::deque<size_t> springs;
-        for (const auto& damagedSpring : damagedSprings) {
+        for (const auto &damagedSpring : damagedSprings)
+        {
             springs.emplace_back(std::stoull(damagedSpring));
         }
         m_solution += m_springInventories.back().findAllVariants(input[0], springs);
@@ -39,11 +40,11 @@ private:
     int m_solution = 0;
 };
 
-class SecondTaskSolver : public FileParser
+class FourthTaskPartTwoSolver : public FileParser
 {
 public:
-    SecondTaskSolver(const std::string_view fileName)
-        : FileParser{ fileName }
+    FourthTaskPartTwoSolver(const std::string_view fileName)
+        : FileParser{fileName}
     {
         parseFile();
     }
@@ -52,17 +53,21 @@ public:
     {
         const auto input = common::splitString(line, ' ');
         std::stringstream ss;
-        for (auto i = 0; i < 5; ++i) {
+        for (auto i = 0; i < 5; ++i)
+        {
             ss << input[0];
-            if (i != 4) {
+            if (i != 4)
+            {
                 ss << "?";
             }
         }
         m_springInventories.emplace_back(ss.str());
         const auto damagedSprings = common::splitToMultipleString(input[1], ',');
         std::deque<size_t> springs;
-        for (auto i = 0; i < 5; ++i) {
-            for (const auto& damagedSpring : damagedSprings) {
+        for (auto i = 0; i < 5; ++i)
+        {
+            for (const auto &damagedSpring : damagedSprings)
+            {
                 springs.emplace_back(std::stoull(damagedSpring));
             }
         }
@@ -81,20 +86,20 @@ private:
 
 void solveFirstTask(const std::string_view file)
 {
-    FirstTaskSolver f{ file };
+    FourthTaskPartOneSolver f{file};
     f.solve();
 }
 
 void solveSecondTask(const std::string_view file)
 {
-    SecondTaskSolver f{ file };
+    FourthTaskPartTwoSolver f{file};
     f.solve();
 }
 
 int main()
 {
-    //solveFirstTask("sample.txt");
-    //solveFirstTask("complete.txt");
+    // solveFirstTask("sample.txt");
+    // solveFirstTask("complete.txt");
     solveSecondTask("sample.txt");
     solveSecondTask("complete.txt");
 }

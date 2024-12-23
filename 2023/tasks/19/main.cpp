@@ -5,21 +5,24 @@
 #include <iostream>
 #include <fstream>
 
-class FirstTaskSolver
+class FourthTaskPartOneSolver
 {
 public:
-    FirstTaskSolver(const std::string_view fileName)
+    FourthTaskPartOneSolver(const std::string_view fileName)
     {
-        std::ifstream stream{ fileName.data() };
+        std::ifstream stream{fileName.data()};
 
         std::string line;
-        while (std::getline(stream, line)) {
-            if (line.empty()) {
+        while (std::getline(stream, line))
+        {
+            if (line.empty())
+            {
                 break;
             }
             m_workflowOrganizer.addWorkflow(line);
         }
-        while (std::getline(stream, line)) {
+        while (std::getline(stream, line))
+        {
             m_workflowOrganizer.addPart(line);
         }
 
@@ -30,23 +33,22 @@ private:
     WorkflowOrganizer m_workflowOrganizer;
 };
 
-class SecondTaskSolver
+class FourthTaskPartTwoSolver
 {
 public:
-    SecondTaskSolver(const std::string_view fileName)
+    FourthTaskPartTwoSolver(const std::string_view fileName)
     {
     }
-
 };
 
 void solveFirstTask(const std::string_view file)
 {
-    FirstTaskSolver f{ file };
+    FourthTaskPartOneSolver f{file};
 }
 
 void solveSecondTask(const std::string_view file)
 {
-    SecondTaskSolver f{ file };
+    FourthTaskPartTwoSolver f{file};
 }
 
 int main()

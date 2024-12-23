@@ -4,29 +4,30 @@
 #include "source/Hash.h"
 #include "source/HashMap.h"
 
-class FirstTaskSolver : public TaskSolver
+class FourthTaskPartOneSolver : public TaskSolver
 {
 public:
-    FirstTaskSolver(const std::string_view fileName)
-        : TaskSolver{ fileName }
+    FourthTaskPartOneSolver(const std::string_view fileName)
+        : TaskSolver{fileName}
     {
     }
 
     void parseLine(std::string_view line) override
     {
         const auto initializationSequence = common::splitToMultipleString(line, ',');
-        for (const auto& step : initializationSequence) {
-            Hash h{ step };
+        for (const auto &step : initializationSequence)
+        {
+            Hash h{step};
             m_solution += h.value();
         }
     }
 };
 
-class SecondTaskSolver : public TaskSolver
+class FourthTaskPartTwoSolver : public TaskSolver
 {
 public:
-    SecondTaskSolver(const std::string_view fileName)
-        : TaskSolver{ fileName }
+    FourthTaskPartTwoSolver(const std::string_view fileName)
+        : TaskSolver{fileName}
     {
     }
 
@@ -34,11 +35,15 @@ public:
     {
         const auto initializationSequence = common::splitToMultipleString(line, ',');
         HashMap map;
-        for (const auto& step : initializationSequence) {
+        for (const auto &step : initializationSequence)
+        {
             bool removeLens = step.contains('-');
-            if (removeLens) {
+            if (removeLens)
+            {
                 map.removeValue(common::splitString(step, '-')[0]);
-            } else {
+            }
+            else
+            {
                 const auto splitStep = common::splitString(step, '=');
                 const auto label = splitStep[0];
                 const auto focalLength = std::stoll(splitStep[1]);
@@ -51,13 +56,13 @@ public:
 
 void solveFirstTask(const std::string_view file)
 {
-    FirstTaskSolver f{ file };
+    FourthTaskPartOneSolver f{file};
     f.solveTask();
 }
 
 void solveSecondTask(const std::string_view file)
 {
-    SecondTaskSolver f{ file };
+    FourthTaskPartTwoSolver f{file};
     f.solveTask();
 }
 

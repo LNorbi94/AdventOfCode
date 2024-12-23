@@ -7,11 +7,11 @@
 #include <iostream>
 #include <vector>
 
-class FirstTaskSolver : public FileParser
+class FourthTaskPartOneSolver : public FileParser
 {
 public:
-    FirstTaskSolver(const std::string_view fileName)
-        : FileParser{ fileName }
+    FourthTaskPartOneSolver(const std::string_view fileName)
+        : FileParser{fileName}
     {
         parseFile();
     }
@@ -30,11 +30,11 @@ private:
     RoutePlanner m_planner;
 };
 
-class SecondTaskSolver : public FileParser
+class FourthTaskPartTwoSolver : public FileParser
 {
 public:
-    SecondTaskSolver(const std::string_view fileName)
-        : FileParser{ fileName }
+    FourthTaskPartTwoSolver(const std::string_view fileName)
+        : FileParser{fileName}
     {
         parseFile();
     }
@@ -55,13 +55,13 @@ private:
 
 void solveFirstTask(const std::string_view file)
 {
-    FirstTaskSolver f{ file };
+    FourthTaskPartOneSolver f{file};
     f.solveMap();
 }
 
 void solveSecondTask(const std::string_view file)
 {
-    SecondTaskSolver f{ file };
+    FourthTaskPartTwoSolver f{file};
     f.solveMap();
 }
 
