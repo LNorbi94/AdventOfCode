@@ -36,7 +36,7 @@ target_link_libraries(AoC2023 PRIVATE Common argparse)
 target_include_directories(AoC2023 PRIVATE ${LIBRARY_INCLUDES})
 target_include_directories(AoC2023 PRIVATE ${TASKS_INCLUDES})
 
-foreach(X RANGE 1 9) # to 25...
+foreach(X RANGE 1 10) # to 25...
   file(GLOB TASK_SRC_FILES CONFIGURE_DEPENDS "tasks/${X}/*.cpp")
   add_library(${X}_lib
     ${TASK_SRC_FILES}

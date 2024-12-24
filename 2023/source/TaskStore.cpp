@@ -9,6 +9,7 @@
 #include <7/SeventhTask.h>
 #include <8/EighthTask.h>
 #include <9/NinthTask.h>
+#include <10/TenthTask.h>
 
 TaskStore::TaskStore()
 {
@@ -31,6 +32,7 @@ void TaskStore::RegisterTasks()
     RegisterTask("7", std::make_unique<SeventhTask>());
     RegisterTask("8", std::make_unique<EighthTask>());
     RegisterTask("9", std::make_unique<NinthTask>());
+    RegisterTask("10", std::make_unique<TenthTask>());
 }
 
 void TaskStore::RegisterTask(const std::string &taskName, std::unique_ptr<ITask> task)
