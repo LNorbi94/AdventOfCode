@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <fstream>
+#include "TwelfthTask.h"
 
 class FourthTaskPartOneSolver
 {

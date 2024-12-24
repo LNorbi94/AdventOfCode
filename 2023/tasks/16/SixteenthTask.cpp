@@ -1,8 +1,8 @@
 #include "TaskSolver.h"
 #include "StringManipulation.h"
 
-#include "source/Id.h"
-#include "source/TileMap.h"
+#include "Id.h"
+#include "TileMap.h"
 
 #include <iostream>
 #include <vector>

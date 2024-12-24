@@ -1,21 +1,29 @@
-#include "FileParser.h"
+#include "EleventhTask.h"
 
-#include "Graphs/Id.h"
-#include "source/GalaxyMap.h"
+#include "common/Graphs/Id.h"
+#include "common/FileParser.h"
+#include "GalaxyMap.h"
 
+#include <functional>
 #include <iostream>
+#include <filesystem>
 
-class FourthTaskPartOneSolver : public FileParser
+namespace
+{
+    const std::filesystem::path inputFileName = "11.txt";
+}
+
+class EleventhTaskPartOneSolver : public FileParser
 {
 public:
-    FourthTaskPartOneSolver(const std::string_view fileName)
+    EleventhTaskPartOneSolver(const std::string_view fileName)
         : FileParser{fileName}
     {
-        parseFile();
+        ParseFile(std::bind_front(&EleventhTaskPartOneSolver::parseLine, this));
         m_map.correctLengthForExpansion();
     }
 
-    void parseLine(const std::string_view line) override
+    void parseLine(const std::string_view line)
     {
         m_map.addData(line);
     }
@@ -29,17 +37,17 @@ private:
     GalaxyMap m_map;
 };
 
-class FourthTaskPartTwoSolver : public FileParser
+class EleventhTaskPartTwoSolver : public FileParser
 {
 public:
-    FourthTaskPartTwoSolver(const std::string_view fileName)
+    EleventhTaskPartTwoSolver(const std::string_view fileName)
         : FileParser{fileName}
     {
-        parseFile();
+        ParseFile(std::bind_front(&EleventhTaskPartTwoSolver::parseLine, this));
         m_map.correctLengthForExpansion();
     }
 
-    void parseLine(std::string_view line) override
+    void parseLine(std::string_view line)
     {
         m_map.addData(line);
     }
@@ -53,22 +61,14 @@ private:
     GalaxyMap m_map;
 };
 
-void solveFirstTask(const std::string_view file)
+void EleventhTask::SolveFirstPart()
 {
-    FourthTaskPartOneSolver f{file};
+    EleventhTaskPartOneSolver f{inputFileName.string()};
     f.solveMap();
 }
 
-void solveSecondTask(const std::string_view file)
+void EleventhTask::SolveSecondPart()
 {
-    FourthTaskPartTwoSolver f{file};
+    EleventhTaskPartTwoSolver f{inputFileName.string()};
     f.solveMap();
-}
-
-int main()
-{
-    solveFirstTask("sample.txt");
-    // solveFirstTask("complete.txt");
-    solveSecondTask("sample.txt");
-    solveSecondTask("complete.txt");
 }

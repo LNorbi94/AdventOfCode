@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Direction.h"
+#include "common/Direction.h"
 #include "common/Graphs/Id.h"
 
 #include <array>

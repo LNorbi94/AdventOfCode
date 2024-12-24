@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Direction.h"
+#include "common/Direction.h"
 #include "Id.h"
 #include "TileType.h"
 
@@ -15,16 +15,16 @@ public:
     void setEnergized(bool energized);
     bool energized() const;
 
-    const Id& getId() const;
+    const Id &getId() const;
 
     TileType getType() const;
 
-    std::vector< Direction > getNextTiles(const Direction direction) const;
+    std::vector<Direction> getNextTiles(const Direction direction) const;
 
-    Direction getDirectionToTile(const Id& id) const;
+    Direction getDirectionToTile(const Id &id) const;
 
-    std::array< const Id, 4 > getNeighbours() const;
-    const Id& getNeighbour(Direction direction) const;
+    std::array<const Id, 4> getNeighbours() const;
+    const Id &getNeighbour(Direction direction) const;
 
 private:
     Id m_id;

@@ -1,23 +1,31 @@
-#include "FileParser.h"
-#include "StringManipulation.h"
+#include "common/FileParser.h"
+#include "common/StringManipulation.h"
 
-#include "source/SpringInventory.h"
+#include "SpringInventory.h"
 
+#include <functional>
 #include <iostream>
 #include <sstream>
 
 #include <deque>
+#include "TwelfthTask.h"
+#include <filesystem>
 
-class FourthTaskPartOneSolver : public FileParser
+namespace
+{
+    const std::filesystem::path inputFileName = "12.txt";
+}
+
+class TwelfthTaskPartOneSolver : public FileParser
 {
 public:
-    FourthTaskPartOneSolver(const std::string_view fileName)
+    TwelfthTaskPartOneSolver(const std::string_view fileName)
         : FileParser{fileName}
     {
-        parseFile();
+        ParseFile(std::bind_front(&TwelfthTaskPartOneSolver::parseLine, this));
     }
 
-    void parseLine(const std::string_view line) override
+    void parseLine(const std::string_view line)
     {
         const auto input = common::splitString(line, ' ');
         m_springInventories.emplace_back(input[0]);
@@ -40,16 +48,16 @@ private:
     int m_solution = 0;
 };
 
-class FourthTaskPartTwoSolver : public FileParser
+class TwelfthTaskPartTwoSolver : public FileParser
 {
 public:
-    FourthTaskPartTwoSolver(const std::string_view fileName)
+    TwelfthTaskPartTwoSolver(const std::string_view fileName)
         : FileParser{fileName}
     {
-        parseFile();
+        ParseFile(std::bind_front(&TwelfthTaskPartTwoSolver::parseLine, this));
     }
 
-    void parseLine(std::string_view line) override
+    void parseLine(std::string_view line)
     {
         const auto input = common::splitString(line, ' ');
         std::stringstream ss;
@@ -84,22 +92,14 @@ private:
     int64_t m_solution = 0;
 };
 
-void solveFirstTask(const std::string_view file)
+void TwelfthTask::SolveFirstPart()
 {
-    FourthTaskPartOneSolver f{file};
+    TwelfthTaskPartOneSolver f{inputFileName.string()};
     f.solve();
 }
 
-void solveSecondTask(const std::string_view file)
+void TwelfthTask::SolveSecondPart()
 {
-    FourthTaskPartTwoSolver f{file};
+    TwelfthTaskPartTwoSolver f{inputFileName.string()};
     f.solve();
-}
-
-int main()
-{
-    // solveFirstTask("sample.txt");
-    // solveFirstTask("complete.txt");
-    solveSecondTask("sample.txt");
-    solveSecondTask("complete.txt");
 }

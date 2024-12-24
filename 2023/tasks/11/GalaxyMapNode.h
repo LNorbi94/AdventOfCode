@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graphs/Node.h"
+#include "common/Graphs/Node.h"
 
 #include "NodeType.h"
 

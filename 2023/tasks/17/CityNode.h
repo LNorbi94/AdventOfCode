@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Id.h"
-#include "Direction.h"
+#include "common/Direction.h"
 
 struct CityNode
 {

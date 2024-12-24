@@ -1,21 +1,24 @@
+#include "ThirteenthTask.h"
 
-#include "TaskSolver.h"
-#include "StringManipulation.h"
+#include "common/StringManipulation.h"
 
-#include "source/Valley.h"
+#include "Valley.h"
 
-#include <regex>
-#include <set>
-#include <map>
 #include <fstream>
 #include <iostream>
-#include <sstream>
-#include <stack>
+#include <vector>
+#include <string>
+#include <filesystem>
 
-class FourthTaskPartOneSolver
+namespace
+{
+    const std::filesystem::path inputFileName = "13.txt";
+}
+
+class ThirteenthTaskPartOneSolver
 {
 public:
-    FourthTaskPartOneSolver(const std::string_view fileName)
+    ThirteenthTaskPartOneSolver(const std::string_view fileName)
     {
         std::ifstream stream{fileName.data()};
 
@@ -45,10 +48,10 @@ public:
     }
 };
 
-class FourthTaskPartTwoSolver
+class ThirteenthTaskPartTwoSolver
 {
 public:
-    FourthTaskPartTwoSolver(const std::string_view fileName)
+    ThirteenthTaskPartTwoSolver(const std::string_view fileName)
     {
         std::ifstream stream{fileName.data()};
 
@@ -78,20 +81,12 @@ public:
     }
 };
 
-void solveFirstTask(const std::string_view file)
+void ThirteenthTask::SolveFirstPart()
 {
-    FourthTaskPartOneSolver f{file};
+    ThirteenthTaskPartOneSolver f{inputFileName.string()};
 }
 
-void solveSecondTask(const std::string_view file)
+void ThirteenthTask::SolveSecondPart()
 {
-    FourthTaskPartTwoSolver f{file};
-}
-
-int main()
-{
-    solveFirstTask("sample.txt");
-    solveFirstTask("complete.txt");
-    solveSecondTask("sample.txt");
-    solveSecondTask("complete.txt");
+    ThirteenthTaskPartTwoSolver f{inputFileName.string()};
 }
