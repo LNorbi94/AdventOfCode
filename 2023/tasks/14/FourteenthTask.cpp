@@ -1,29 +1,34 @@
 
-#include "TaskSolver.h"
-#include "StringManipulation.h"
+#include "common/TaskSolver.h"
+#include "common/StringManipulation.h"
 
-#include "source/Platform.h"
+#include "Platform.h"
 
-#include <regex>
-#include <set>
-#include <map>
+#include <functional>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <stack>
+#include "FourteenthTask.h"
+#include <filesystem>
 
-class FourthTaskPartOneSolver : public FileParser
+namespace
+{
+    const std::filesystem::path inputFileName = "14.txt";
+}
+
+class FourteenthTaskPartOneSolver : public FileParser
 {
 public:
-    FourthTaskPartOneSolver(const std::string_view fileName)
+    FourteenthTaskPartOneSolver(const std::string_view fileName)
         : FileParser{fileName}
     {
-        parseFile();
+        ParseFile(std::bind_front(&FourteenthTaskPartOneSolver::parseLine, this));
     }
 
-    void parseLine(const std::string_view line) override
+    void parseLine(const std::string &line)
     {
-        p.addRow(std::string(line));
+        p.addRow(line);
     }
 
     void solve()
@@ -36,18 +41,18 @@ private:
     Platform p;
 };
 
-class FourthTaskPartTwoSolver : public FileParser
+class FourteenthTaskPartTwoSolver : public FileParser
 {
 public:
-    FourthTaskPartTwoSolver(const std::string_view fileName)
+    FourteenthTaskPartTwoSolver(const std::string_view fileName)
         : FileParser{fileName}
     {
-        parseFile();
+        ParseFile(std::bind_front(&FourteenthTaskPartTwoSolver::parseLine, this));
     }
 
-    void parseLine(const std::string_view line) override
+    void parseLine(const std::string &line)
     {
-        p.addRow(std::string(line));
+        p.addRow(line);
     }
 
     void solve()
@@ -60,20 +65,14 @@ private:
     Platform p;
 };
 
-void solveFirstTask(const std::string_view file)
+void FourteenthTask::SolveFirstPart()
 {
-    FourthTaskPartOneSolver f{file};
+    FourteenthTaskPartOneSolver f{inputFileName.string()};
     f.solve();
 }
 
-void solveSecondTask(const std::string_view file)
+void FourteenthTask::SolveSecondPart()
 {
-    FourthTaskPartTwoSolver f{file};
+    FourteenthTaskPartTwoSolver f{inputFileName.string()};
     f.solve();
-}
-
-int main()
-{
-    solveFirstTask("complete.txt");
-    solveSecondTask("complete.txt");
 }

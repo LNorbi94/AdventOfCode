@@ -1,18 +1,27 @@
-#include "TaskSolver.h"
-#include "StringManipulation.h"
+#include "common/TaskSolver.h"
+#include "common/StringManipulation.h"
 
-#include "source/Hash.h"
-#include "source/HashMap.h"
+#include <functional>
+#include "Hash.h"
+#include "HashMap.h"
+#include "FifteenthTask.h"
+#include <filesystem>
 
-class FourthTaskPartOneSolver : public TaskSolver
+namespace
+{
+    const std::filesystem::path inputFileName = "15.txt";
+}
+
+class FifteenthTaskPartOneSolver : public TaskSolver
 {
 public:
-    FourthTaskPartOneSolver(const std::string_view fileName)
+    FifteenthTaskPartOneSolver(const std::string_view fileName)
         : TaskSolver{fileName}
     {
+        ParseFile(std::bind_front(&FifteenthTaskPartOneSolver::parseLine, this));
     }
 
-    void parseLine(std::string_view line) override
+    void parseLine(std::string_view line)
     {
         const auto initializationSequence = common::splitToMultipleString(line, ',');
         for (const auto &step : initializationSequence)
@@ -23,15 +32,16 @@ public:
     }
 };
 
-class FourthTaskPartTwoSolver : public TaskSolver
+class FifteenthTaskPartTwoSolver : public TaskSolver
 {
 public:
-    FourthTaskPartTwoSolver(const std::string_view fileName)
+    FifteenthTaskPartTwoSolver(const std::string_view fileName)
         : TaskSolver{fileName}
     {
+        ParseFile(std::bind_front(&FifteenthTaskPartTwoSolver::parseLine, this));
     }
 
-    void parseLine(std::string_view line) override
+    void parseLine(std::string_view line)
     {
         const auto initializationSequence = common::splitToMultipleString(line, ',');
         HashMap map;
@@ -54,22 +64,14 @@ public:
     }
 };
 
-void solveFirstTask(const std::string_view file)
+void FifteenthTask::SolveFirstPart()
 {
-    FourthTaskPartOneSolver f{file};
+    FifteenthTaskPartOneSolver f{inputFileName.string()};
     f.solveTask();
 }
 
-void solveSecondTask(const std::string_view file)
+void FifteenthTask::SolveSecondPart()
 {
-    FourthTaskPartTwoSolver f{file};
+    FifteenthTaskPartTwoSolver f{inputFileName.string()};
     f.solveTask();
-}
-
-int main()
-{
-    solveFirstTask("sample.txt");
-    solveFirstTask("complete.txt");
-    solveSecondTask("sample.txt");
-    solveSecondTask("complete.txt");
 }
