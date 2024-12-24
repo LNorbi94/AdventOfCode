@@ -1,21 +1,31 @@
-#include "TaskSolver.h"
-#include "StringManipulation.h"
+#include "SixteenthTask.h"
 
-#include "Id.h"
+#include "common/TaskSolver.h"
+#include "common/StringManipulation.h"
+
+#include "common/Graphs/Id.h"
 #include "TileMap.h"
 
+#include <functional>
 #include <iostream>
 #include <vector>
+#include <filesystem>
 
-class FourthTaskPartOneSolver : public TaskSolver
+namespace
+{
+    const std::filesystem::path inputFileName = "16.txt";
+}
+
+class SixteenthTaskPartOneSolver : public TaskSolver
 {
 public:
-    FourthTaskPartOneSolver(const std::string_view fileName)
+    SixteenthTaskPartOneSolver(const std::string_view fileName)
         : TaskSolver{fileName}
     {
+        ParseFile(std::bind_front(&SixteenthTaskPartOneSolver::parseLine, this));
     }
 
-    void parseLine(const std::string_view line) override
+    void parseLine(const std::string_view line)
     {
         m_tileMap.addTiles(line);
     }
@@ -29,15 +39,16 @@ private:
     TileMap m_tileMap;
 };
 
-class FourthTaskPartTwoSolver : public TaskSolver
+class SixteenthTaskPartTwoSolver : public TaskSolver
 {
 public:
-    FourthTaskPartTwoSolver(const std::string_view fileName)
+    SixteenthTaskPartTwoSolver(const std::string_view fileName)
         : TaskSolver{fileName}
     {
+        ParseFile(std::bind_front(&SixteenthTaskPartTwoSolver::parseLine, this));
     }
 
-    void parseLine(std::string_view line) override
+    void parseLine(std::string_view line)
     {
         m_tileMap.addTiles(line);
     }
@@ -51,24 +62,16 @@ private:
     TileMap m_tileMap;
 };
 
-void solveFirstTask(const std::string_view file)
+void SixteenthTask::SolveFirstPart()
 {
-    FourthTaskPartOneSolver f{file};
+    SixteenthTaskPartOneSolver f{inputFileName.string()};
     f.solveTask();
     f.solveMap();
 }
 
-void solveSecondTask(const std::string_view file)
+void SixteenthTask::SolveSecondPart()
 {
-    FourthTaskPartTwoSolver f{file};
+    SixteenthTaskPartTwoSolver f{inputFileName.string()};
     f.solveTask();
     f.solveMap();
-}
-
-int main()
-{
-    solveFirstTask("sample.txt");
-    solveFirstTask("complete.txt");
-    solveSecondTask("sample.txt");
-    solveSecondTask("complete.txt");
 }

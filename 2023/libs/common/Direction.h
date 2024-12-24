@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 enum class Direction
 {
     Left,
@@ -9,18 +11,39 @@ enum class Direction
     Unknown
 };
 
-inline
-Direction reverseDirection(const Direction direction)
+inline Direction stringToDirection(const std::string_view input)
 {
-    switch (direction) {
-        case Direction::Left:
-            return Direction::Right;
-        case Direction::Right:
-            return Direction::Left;
-        case Direction::Top:
-            return Direction::Bottom;
-        case Direction::Bottom:
-            return Direction::Top;
+    if (input == "R")
+    {
+        return Direction::Right;
+    }
+    else if (input == "L")
+    {
+        return Direction::Left;
+    }
+    else if (input == "D")
+    {
+        return Direction::Bottom;
+    }
+    else if (input == "U")
+    {
+        return Direction::Top;
+    }
+    return Direction::Unknown;
+}
+
+inline Direction reverseDirection(const Direction direction)
+{
+    switch (direction)
+    {
+    case Direction::Left:
+        return Direction::Right;
+    case Direction::Right:
+        return Direction::Left;
+    case Direction::Top:
+        return Direction::Bottom;
+    case Direction::Bottom:
+        return Direction::Top;
     }
     return Direction::Unknown;
 }

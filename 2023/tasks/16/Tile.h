@@ -1,7 +1,7 @@
 #pragma once
 
 #include "common/Direction.h"
-#include "Id.h"
+#include "common/Graphs/Id.h"
 #include "TileType.h"
 
 #include <array>

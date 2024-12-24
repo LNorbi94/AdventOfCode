@@ -1,15 +1,21 @@
-#include "TaskSolver.h"
+#include "common/TaskSolver.h"
 
 // #include "source/WorkflowOrganizer.h"
 
 #include <iostream>
 #include <fstream>
-#include "TwelfthTask.h"
+#include "TwentiethTask.h"
+#include <filesystem>
 
-class FourthTaskPartOneSolver
+namespace
+{
+    const std::filesystem::path inputFileName = "20.txt";
+}
+
+class TwentiethTaskPartOneSolver
 {
 public:
-    FourthTaskPartOneSolver(const std::string_view fileName)
+    TwentiethTaskPartOneSolver(const std::string_view fileName)
     {
         /*std::ifstream stream{ fileName.data() };
 
@@ -30,28 +36,20 @@ public:
 private:
 };
 
-class FourthTaskPartTwoSolver
+class TwentiethTaskPartTwoSolver
 {
 public:
-    FourthTaskPartTwoSolver(const std::string_view fileName)
+    TwentiethTaskPartTwoSolver(const std::string_view fileName)
     {
     }
 };
 
-void solveFirstTask(const std::string_view file)
+void TwentiethTask::SolveFirstPart()
 {
-    FourthTaskPartOneSolver f{file};
+    TwentiethTaskPartOneSolver f{inputFileName.string()};
 }
 
-void solveSecondTask(const std::string_view file)
+void TwentiethTask::SolveSecondPart()
 {
-    FourthTaskPartTwoSolver f{file};
-}
-
-int main()
-{
-    solveFirstTask("sample.txt");
-    solveFirstTask("complete.txt");
-    solveSecondTask("sample.txt");
-    solveSecondTask("complete.txt");
+    TwentiethTaskPartTwoSolver f{inputFileName.string()};
 }

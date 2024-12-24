@@ -3,11 +3,12 @@
 #include <compare>
 #include <string>
 
-struct Id {
+struct Id
+{
     int row = 0;
     int column = 0;
 
-    auto operator<=>(const Id& rhs) const = default;
+    [[nodiscard]] constexpr auto operator<=>(const Id &rhs) const = default;
 
     operator std::string() const;
 };

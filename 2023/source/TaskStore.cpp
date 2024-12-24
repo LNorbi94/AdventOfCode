@@ -53,11 +53,11 @@ void TaskStore::RegisterTasks()
     RegisterTask("13", std::make_unique<ThirteenthTask>());
     RegisterTask("14", std::make_unique<FourteenthTask>());
     RegisterTask("15", std::make_unique<FifteenthTask>());
-    // RegisterTask("16", std::make_unique<SixteenthTask>());
-    // RegisterTask("17", std::make_unique<SeventeenthTask>());
-    // RegisterTask("18", std::make_unique<EighteenthTask>());
-    // RegisterTask("19", std::make_unique<NineteenthTask>());
-    // RegisterTask("20", std::make_unique<TwentiethTask>());
+    RegisterTask("16", std::make_unique<SixteenthTask>());
+    RegisterTask("17", std::make_unique<SeventeenthTask>());
+    RegisterTask("18", std::make_unique<EighteenthTask>());
+    RegisterTask("19", std::make_unique<NineteenthTask>());
+    RegisterTask("20", std::make_unique<TwentiethTask>());
     // RegisterTask("21", std::make_unique<TwentyFirstTask>());
     // RegisterTask("22", std::make_unique<TwentySecondTask>());
     // RegisterTask("23", std::make_unique<TwentyThirdTask>());

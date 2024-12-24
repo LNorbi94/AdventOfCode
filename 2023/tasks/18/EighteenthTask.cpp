@@ -1,22 +1,31 @@
-#include "TaskSolver.h"
-#include "StringManipulation.h"
+#include "EighteenthTask.h"
 
-#include "source/Id.h"
-#include "source/Trench.h"
+#include "common/TaskSolver.h"
+#include "common/StringManipulation.h"
+#include "common/Graphs/Id.h"
 
+#include "Trench.h"
+
+#include <functional>
 #include <iostream>
 #include <vector>
+#include <filesystem>
 
-class FourthTaskPartOneSolver : public TaskSolver
+namespace
+{
+    const std::filesystem::path inputFileName = "18.txt";
+}
+
+class EighteenthTaskPartOneSolver : public TaskSolver
 {
 public:
-    FourthTaskPartOneSolver(const std::string_view fileName)
+    EighteenthTaskPartOneSolver(const std::string_view fileName)
         : TaskSolver{fileName}
     {
-        parseFile();
+        ParseFile(std::bind_front(&EighteenthTaskPartOneSolver::parseLine, this));
     }
 
-    void parseLine(const std::string_view line) override
+    void parseLine(const std::string_view line)
     {
         m_trench.dig(line);
     }
@@ -30,16 +39,16 @@ private:
     Trench m_trench;
 };
 
-class FourthTaskPartTwoSolver : public TaskSolver
+class EighteenthTaskPartTwoSolver : public TaskSolver
 {
 public:
-    FourthTaskPartTwoSolver(const std::string_view fileName)
+    EighteenthTaskPartTwoSolver(const std::string_view fileName)
         : TaskSolver{fileName}
     {
-        parseFile();
+        ParseFile(std::bind_front(&EighteenthTaskPartTwoSolver::parseLine, this));
     }
 
-    void parseLine(std::string_view line) override
+    void parseLine(std::string_view line)
     {
         m_trench.alternativeDig(line);
     }
@@ -53,22 +62,14 @@ private:
     Trench m_trench;
 };
 
-void solveFirstTask(const std::string_view file)
+void EighteenthTask::SolveFirstPart()
 {
-    FourthTaskPartOneSolver f{file};
+    EighteenthTaskPartOneSolver f{inputFileName.string()};
     f.solveMap();
 }
 
-void solveSecondTask(const std::string_view file)
+void EighteenthTask::SolveSecondPart()
 {
-    FourthTaskPartTwoSolver f{file};
+    EighteenthTaskPartTwoSolver f{inputFileName.string()};
     f.solveMap();
-}
-
-int main()
-{
-    solveFirstTask("sample.txt");
-    solveFirstTask("complete.txt");
-    solveSecondTask("sample.txt");
-    solveSecondTask("complete.txt");
 }

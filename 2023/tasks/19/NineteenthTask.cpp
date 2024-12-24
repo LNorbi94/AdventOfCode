@@ -1,14 +1,22 @@
-#include "TaskSolver.h"
+#include "NineteenthTask.h"
 
-#include "source/WorkflowOrganizer.h"
+#include "common/TaskSolver.h"
+
+#include "WorkflowOrganizer.h"
 
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 
-class FourthTaskPartOneSolver
+namespace
+{
+    const std::filesystem::path inputFileName = "19.txt";
+}
+
+class NineteenthTaskPartOneSolver
 {
 public:
-    FourthTaskPartOneSolver(const std::string_view fileName)
+    NineteenthTaskPartOneSolver(const std::string_view fileName)
     {
         std::ifstream stream{fileName.data()};
 
@@ -33,28 +41,20 @@ private:
     WorkflowOrganizer m_workflowOrganizer;
 };
 
-class FourthTaskPartTwoSolver
+class NineteenthTaskPartTwoSolver
 {
 public:
-    FourthTaskPartTwoSolver(const std::string_view fileName)
+    NineteenthTaskPartTwoSolver(const std::string_view fileName)
     {
     }
 };
 
-void solveFirstTask(const std::string_view file)
+void NineteenthTask::SolveFirstPart()
 {
-    FourthTaskPartOneSolver f{file};
+    NineteenthTaskPartOneSolver f{inputFileName.string()};
 }
 
-void solveSecondTask(const std::string_view file)
+void NineteenthTask::SolveSecondPart()
 {
-    FourthTaskPartTwoSolver f{file};
-}
-
-int main()
-{
-    solveFirstTask("sample.txt");
-    solveFirstTask("complete.txt");
-    solveSecondTask("sample.txt");
-    solveSecondTask("complete.txt");
+    NineteenthTaskPartTwoSolver f{inputFileName.string()};
 }
