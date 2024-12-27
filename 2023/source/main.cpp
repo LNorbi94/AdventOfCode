@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     argparse::ArgumentParser program("AoC2023");
 
     program.add_argument("-t", "--task")
-        .default_value(std::string("7"))
+        .default_value(std::string("19"))
         .help("specify the task to run.");
 
     try

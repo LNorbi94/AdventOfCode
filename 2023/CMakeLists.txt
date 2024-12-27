@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1...3.27)
+cmake_minimum_required(VERSION 3.31)
 
 project(
   AdventOfCode
@@ -18,7 +18,6 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # fetch latest argparse
-include(FetchContent)
 FetchContent_Declare(
     argparse
     GIT_REPOSITORY https://github.com/p-ranav/argparse.git
