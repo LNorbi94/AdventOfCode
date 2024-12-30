@@ -27,7 +27,7 @@ public:
 
     void parseLine(const std::string_view line)
     {
-        const auto input = common::splitString(line, ' ');
+        const auto input = common::splitString(std::string(line), " ");
         m_springInventories.emplace_back(input[0]);
         const auto damagedSprings = common::splitToMultipleString(input[1], ',');
         std::deque<size_t> springs;
@@ -59,7 +59,7 @@ public:
 
     void parseLine(std::string_view line)
     {
-        const auto input = common::splitString(line, ' ');
+        const auto input = common::splitString(std::string(line), " ");
         std::stringstream ss;
         for (auto i = 0; i < 5; ++i)
         {

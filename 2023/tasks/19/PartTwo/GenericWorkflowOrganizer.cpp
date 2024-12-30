@@ -7,7 +7,7 @@
 
 void GenericWorkflowOrganizer::addWorkflow(std::string_view line)
 {
-    const auto &[name, rule] = common::splitString(line, '{');
+    const auto &[name, rule] = common::splitString(std::string(line), "{");
     m_workflows[name] = GenericWorkflow{rule.substr(0, rule.size() - 1)};
 }
 

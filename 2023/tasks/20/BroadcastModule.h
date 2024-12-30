@@ -2,7 +2,7 @@
 
 #include "IModule.h"
 
-class FlipFlopModule : public IModule
+class BroadcastModule : public IModule
 {
 public:
     void addDestinations(const std::vector<std::string> &destinations_) override;
@@ -10,6 +10,5 @@ public:
     std::vector<Signal> receivePulse(const std::string &sender, Pulse pulse) override;
 
 private:
-    bool isOn = false;
     std::vector<std::string> destinations;
 };

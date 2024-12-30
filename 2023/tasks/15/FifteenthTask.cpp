@@ -50,11 +50,11 @@ public:
             bool removeLens = step.contains('-');
             if (removeLens)
             {
-                map.removeValue(common::splitString(step, '-')[0]);
+                map.removeValue(common::splitString(step, "-")[0]);
             }
             else
             {
-                const auto splitStep = common::splitString(step, '=');
+                const auto splitStep = common::splitString(step, "=");
                 const auto label = splitStep[0];
                 const auto focalLength = std::stoll(splitStep[1]);
                 map.addValue(label, focalLength);

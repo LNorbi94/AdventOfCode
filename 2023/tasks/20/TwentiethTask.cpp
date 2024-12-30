@@ -1,10 +1,8 @@
-#include "common/TaskSolver.h"
+#include "TwentiethTask.h"
 
-// #include "source/WorkflowOrganizer.h"
+#include "CommunicationRelay.h"
 
 #include <iostream>
-#include <fstream>
-#include "TwentiethTask.h"
 #include <filesystem>
 
 namespace
@@ -12,44 +10,16 @@ namespace
     const std::filesystem::path inputFileName = "20.txt";
 }
 
-class TwentiethTaskPartOneSolver
-{
-public:
-    TwentiethTaskPartOneSolver(const std::string_view fileName)
-    {
-        /*std::ifstream stream{ fileName.data() };
-
-        std::string line;
-        while (std::getline(stream, line)) {
-            if (line.empty()) {
-                break;
-            }
-            m_workflowOrganizer.addWorkflow(line);
-        }
-        while (std::getline(stream, line)) {
-            m_workflowOrganizer.addPart(line);
-        }
-
-        std::cout << m_workflowOrganizer.getTotalPartsRanking() << "\n";*/
-    }
-
-private:
-};
-
-class TwentiethTaskPartTwoSolver
-{
-public:
-    TwentiethTaskPartTwoSolver(const std::string_view fileName)
-    {
-    }
-};
-
 void TwentiethTask::SolveFirstPart()
 {
-    TwentiethTaskPartOneSolver f{inputFileName.string()};
+    CommunicationRelay relay{};
+    relay.initRelay(inputFileName);
+    std::cout << relay.getPulseCountAfterThousandPush() << "\n";
 }
 
 void TwentiethTask::SolveSecondPart()
 {
-    TwentiethTaskPartTwoSolver f{inputFileName.string()};
+    CommunicationRelay relay{};
+    relay.initRelay(inputFileName);
+    std::cout << relay.getbuttonPushNeededForMachineToTurnOn() << "\n";
 }

@@ -76,7 +76,7 @@ public:
 
     void parseLine(const std::string &line)
     {
-        const auto lines = common::splitString(line, '|');
+        const auto lines = common::splitString(line, "|");
 
         const auto winningNumbers = common::extractNumbers<int>(lines[0]);
         if (winningNumbers.empty())
@@ -110,7 +110,7 @@ public:
 
     void parseLine(const std::string &line)
     {
-        const auto lines = common::splitString(line, '|');
+        const auto lines = common::splitString(line, "|");
 
         const auto winningNumbers = common::extractNumbers<int>(lines[0]);
         if (winningNumbers.empty())
