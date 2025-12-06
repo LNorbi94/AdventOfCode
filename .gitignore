@@ -1,6 +1,5 @@
 complete.txt
 sample.txt
-/2023/13/build/**
-/2023/build/**
-/2023/_deps/**
-/2023/.vscode/**
+/*/build/**
+/*/_deps/**
+/*/.vscode/**
