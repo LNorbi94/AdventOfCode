@@ -6,6 +6,8 @@
 #include <4/FourthTask.h>
 #include <5/FifthTask.h>
 #include <6/SixthTask.h>
+#include <7/SeventhTask.h>
+#include <8/EightTask.h>
 
 TaskStore::TaskStore()
 {
@@ -25,7 +27,9 @@ void TaskStore::RegisterTasks()
     RegisterTask("4", std::make_unique<FourthTask>());
     RegisterTask("5", std::make_unique<FifthTask>());
     RegisterTask("6", std::make_unique<SixthTask>());
-    /*RegisterTask("7", std::make_unique<SeventhTask>());
+    RegisterTask("7", std::make_unique<SeventhTask>());
+    RegisterTask("8", std::make_unique<EightTask>());
+    /*RegisterTask("8", std::make_unique<EighthTask>());
     RegisterTask("6", std::make_unique<SixthTask>());
     RegisterTask("7", std::make_unique<SeventhTask>());
     RegisterTask("8", std::make_unique<EighthTask>());
